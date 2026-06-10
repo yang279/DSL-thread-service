@@ -5,8 +5,7 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 async function exportHex(dsl, outDir, client) {
-  const urlDesc = client.mode === 'ipc' ? 'IPC' : (process.env.HEX_SERVICE_URL || 'http://localhost:3101');
-  console.log(`调用 dsl-to-hex (${urlDesc}) (file: ${dsl.meta?.file_name || 'design-dsl'})`);
+  console.log(`调用 dsl-to-hex (file: ${dsl.meta?.file_name || 'design-dsl'})`);
 
   const result = await client.callDslToHexConvert(dsl);
 

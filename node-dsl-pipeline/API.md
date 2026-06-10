@@ -70,34 +70,25 @@ curl -X POST http://localhost:3104/pipeline \
 ```json
 {
   "success": true,
+  "artifact_id": "1749558000000-ab3f2",
   "stats": {
-    "enrich": {
-      "icons": 3,
-      "components": 5
-    },
-    "layers": {
-      "total": 42,
-      "frames": 18,
-      "texts": 12,
-      "instances": 8,
-      "placeholders": 4
-    },
+    "enrich": { "icons": 3, "components": 5 },
+    "layers": { "total": 42, "frames": 18, "texts": 12, "instances": 8, "placeholders": 4 },
     "missing_keys": 0
   },
-  "hex": "<hex文件内容字符串>",
-  "zip": "<base64编码的zip文件>",
+  "zip": "<base64 编码的 zip>",
   "missing_keys": []
 }
 ```
 
 | 字段 | 说明 |
 |---|---|
-| `stats.enrich.icons` | 成功注入 SVG 的图标数（0 或 1，表示整体是否成功） |
+| `artifact_id` | 本次产物 ID，产物同时存储于服务器 `artifacts/` 目录 |
+| `stats.enrich.icons` | 图标注入是否成功（0/1） |
 | `stats.enrich.components` | 成功匹配到组件的节点数 |
 | `stats.layers` | 图层统计 |
 | `stats.missing_keys` | 缺失组件数量 |
-| `hex` | output.hex 文件内容，可直接写入 `.hex` 文件 |
-| `zip` | base64 编码的 zip 包，包含 hex 及 svg/png 资源 |
+| `zip` | base64 编码的 zip，解压后含 `output.hex` 及 svg/png 资源 |
 | `missing_keys` | 未能解析的组件 key 列表，zip 仍有效但对应组件在 Pixso 中缺失 |
 
 **响应（失败）**
@@ -125,6 +116,7 @@ curl -X POST http://localhost:3104/pipeline \
 | 变量 | 默认值 | 说明 |
 |---|---|---|
 | `PORT` | `3104` | 服务监听端口 |
-| `ICON_AGENT_WORKER` | `./workers/icon-agent/src/worker.js` | icon-agent worker 路径 |
-| `COMPONENT_SERVICE_WORKER` | `./workers/component-service/worker.js` | component-service worker 路径 |
-| `DSL_TO_HEX_WORKER` | `./workers/dsl-to-hex/worker.js` | dsl-to-hex worker 路径 |
+| `ARTIFACTS_DIR` | `../artifacts` | 产物存储目录 |
+| `ICON_AGENT_WORKER` | `../workers/icon-agent/worker.js` | icon-agent worker 路径 |
+| `COMPONENT_SERVICE_WORKER` | `../workers/component-service/worker.js` | component-service worker 路径 |
+| `DSL_TO_HEX_WORKER` | `../workers/dsl-to-hex/worker.js` | dsl-to-hex worker 路径 |
