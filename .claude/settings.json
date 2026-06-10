@@ -6,7 +6,17 @@
       "Skill(run:*)",
       "Bash(node server.js)",
       "Bash(curl -s http://localhost:3104/health)",
-      "Bash(xargs kill -9)"
+      "Bash(xargs kill -9)",
+      "Read(//Users/ucd/Downloads/C2D-main/dsl-match-service/**)",
+      "Read(//Users/ucd/Downloads/C2D-main/dsl-to-hex/**)",
+      "Bash(curl -s http://localhost:3204/health)",
+      "Bash(npm install *)",
+      "Bash(find /Users/ucd/Downloads/C2D-main -name \"search_index.json\" 2>/dev/null)",
+      "Read(//Users/ucd/Downloads/C2D-main/**)",
+      "Bash(node test/verify-workers.js)"
+    ],
+    "additionalDirectories": [
+      "/Users/ucd/Downloads/C2D-main/dsl-match-service"
     ]
   }
 }

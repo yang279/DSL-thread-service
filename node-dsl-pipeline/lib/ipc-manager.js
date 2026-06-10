@@ -44,9 +44,10 @@ class IPCManager {
       });
 
       worker.on('exit', (code) => {
+        clearTimeout(timeout);
+        this.workers[serviceName] = null;
         if (code !== 0) {
-          console.error(`[IPCManager] ${serviceName} 异常退出 (code ${code})`);
-          this.workers[serviceName] = null;
+          reject(new Error(`${serviceName} 异常退出 (code ${code})`));
         }
       });
     });
@@ -91,12 +92,17 @@ class IPCManager {
     const resolve = (envKey, fallback) =>
       path.resolve(process.env[envKey] || path.join(baseDir, fallback));
 
-    await Promise.all([
+    const results = await Promise.allSettled([
       this.startService('iconAgent',        resolve('ICON_AGENT_WORKER',        '../wonderfulj-main/src/worker.js')),
       this.startService('componentService', resolve('COMPONENT_SERVICE_WORKER', '../nodejs/component-service/worker.js')),
       this.startService('dslToHex',         resolve('DSL_TO_HEX_WORKER',        '../nodejs/dsl-to-hex/worker.js')),
     ]);
-    console.log('[IPCManager] 所有服务已启动');
+    const names = ['iconAgent', 'componentService', 'dslToHex'];
+    results.forEach((r, i) => {
+      if (r.status === 'rejected') console.warn(`[IPCManager] ${names[i]} 启动失败: ${r.reason?.message || r.reason}`);
+    });
+    const ready = results.filter(r => r.status === 'fulfilled').length;
+    console.log(`[IPCManager] ${ready}/${names.length} 个服务已就绪`);
   }
 
   stopAll() {

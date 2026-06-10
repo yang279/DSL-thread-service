@@ -13,7 +13,7 @@ const { buildDesignDsl, countLayers } = require('./lib/design-dsl');
 const { exportHex }                   = require('./lib/export-hex');
 
 const app          = express();
-const PORT         = Number(process.env.PORT) || 3104;
+const PORT         = Number(process.env.PORT) || 3204;
 const ARTIFACTS_DIR = path.resolve(process.env.ARTIFACTS_DIR || path.join(__dirname, '../artifacts'));
 const upload       = multer({ storage: multer.memoryStorage() });
 

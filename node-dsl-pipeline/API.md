@@ -2,7 +2,7 @@
 
 接收 node-dsl schema JSON，经过节点补全、DSL 转换、hex 导出三步流水线，输出 Pixso 可导入的 hex 文件。
 
-- 默认端口：`3104`（可通过环境变量 `PORT` 修改）
+- 默认端口：`3204`（可通过环境变量 `PORT` 修改）
 - 服务启动时自动拉起三个 IPC 子进程（icon-agent、component-service、dsl-to-hex）
 
 ---
@@ -17,7 +17,7 @@
 {
   "status": "ok",
   "initialized": true,
-  "port": 3104
+  "port": 3204
 }
 ```
 
@@ -52,7 +52,7 @@
 **请求（multipart/form-data）**
 
 ```bash
-curl -X POST http://localhost:3104/pipeline \
+curl -X POST http://localhost:3204/pipeline \
   -F "file=@input.json" \
   -F "page_name=登录页"
 ```
@@ -115,7 +115,7 @@ curl -X POST http://localhost:3104/pipeline \
 
 | 变量 | 默认值 | 说明 |
 |---|---|---|
-| `PORT` | `3104` | 服务监听端口 |
+| `PORT` | `3204` | 服务监听端口 |
 | `ARTIFACTS_DIR` | `../artifacts` | 产物存储目录 |
 | `ICON_AGENT_WORKER` | `../workers/icon-agent/worker.js` | icon-agent worker 路径 |
 | `COMPONENT_SERVICE_WORKER` | `../workers/component-service/worker.js` | component-service worker 路径 |
