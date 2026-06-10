@@ -18,7 +18,8 @@
       "Bash(ls -t /var/folders/ 2>/dev/null | head -3; find /private/var/folders -name \"pipeline-output-*\" -maxdepth 6 2>/dev/null | head -5)",
       "Read(//private/var/folders/**)",
       "Bash(kill 10418 11828)",
-      "Bash(xargs ls)"
+      "Bash(xargs ls)",
+      "Bash(chmod +x /Users/ucd/Desktop/DSL-thread-service/start.sh /Users/ucd/Desktop/DSL-thread-service/stop.sh)"
     ],
     "additionalDirectories": [
       "/Users/ucd/Downloads/C2D-main/dsl-match-service"
