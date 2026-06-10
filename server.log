@@ -1,0 +1,69 @@
+
+> unified-dsl-pipeline@1.0.0 start
+> npm run start --workspace=@unified/pipeline-server
+
+
+> @unified/pipeline-server@1.0.0 start
+> node server.js
+
+[node-dsl-pipeline HTTP] 服务已启动: http://localhost:3104
+接口列表:
+  GET  /health          - 健康检查
+  POST /init            - 初始化服务模式 { mode: "ipc" | "http" }
+  POST /pipeline        - 完整流程（补全 + 转 DSL + 导出 hex + 保存产物）
+  POST /enrich          - 仅补全节点信息
+  POST /convert         - 仅转换 DSL 为 hex
+  GET  /artifacts       - 查看产物列表
+  GET  /artifacts/:id   - 查看指定产物详情
+  GET  /artifacts/:id/:file - 下载产物文件
+  POST /shutdown        - 关闭服务
+
+产物存储目录: /Users/ucd/Desktop/未命名文件夹/output-artifacts
+
+[dsl-to-hex worker] 预热 WASM...
+[dsl-to-hex worker] WASM 加载成功
+[dsl-to-hex worker] 初始化完成，开始监听 IPC 消息
+[IPCManager] dslToHex 已启动
+[component-service core] hex 索引加载成功: 622 个 key（来源: /Users/ucd/Desktop/未命名文件夹/unified-dsl-pipeline/packages/component-service/search_index.json）
+[component-service worker] 初始化完成，开始监听 IPC 消息
+[IPCManager] componentService 已启动
+[iconAgent] 加载嵌入模型...
+dtype not specified for "model". Using the default dtype (fp32) for this device (cpu).
+[iconAgent] 已加载 1003 个图标，HNSW 索引就绪
+[iconAgent worker] 初始化完成，开始监听 IPC 消息
+[IPCManager] iconAgent 已启动
+[IPCManager] 所有服务已启动
+[node-dsl-pipeline HTTP] 已初始化 ipc 模式
+[match_dsl] matchDsl（整页统一匹配）→ 提取到 7 个可匹配节点
+[match_dsl] matchDsl → 查询词：["顶部导航栏","用户头像","编辑资料按钮（次要操作）","未读消息数量角标","退出登录按钮（危险操作）","底部标签栏","消息标签未读角标"]
+[match_variant] 规范映射表指纹不匹配（索引已更新），重置映射表
+[match_variant] matchVariantsTogether（整页统一匹配）开始：共 7 条查询
+[match_variant] Step 0 聚类：7 条 → 7 个独立簇
+[match_variant] Step 1 规范映射表：0 簇命中，7 簇待 LLM
+[match_variant] Step 2 本地过滤：7/7 个待处理簇有候选，0 个未命中（直接判 null）
+[match_variant] Step 3：7 个簇一次性交给 LLM 选组件集
+[match_variant] selectComponentSetsTogether → 7 个元素，去重合并候选池 44 个组件集
+[match_variant] selectComponentSetsTogether（整页选组件集） → 调用 https://api.deepseek.com/v1 (model=deepseek-v4-flash, timeout=60000ms)
+[match_variant] selectComponentSetsTogether（整页选组件集） ✗ 失败，耗时 299ms：401 Authentication Fails, Your api key: ****key> is invalid
+[component-service worker] match-dsl 失败：401 Authentication Fails, Your api key: ****key> is invalid
+[iconAgent worker] 处理失败: 401 Authentication Fails, Your api key: ****key> is invalid
+⚠ iconAgent 注入失败或无结果，使用原始 schema 继续：401 Authentication Fails, Your api key: ****key> is invalid
+⚠ Component Match 注入失败或无结果，跳过：401 Authentication Fails, Your api key: ****key> is invalid
+✓ Step3/C 完成：iconSvg 跳过，component 注入 0 个节点 → /var/folders/ph/8jtvbjss2876zk30b1f9rbr40000gp/T/pipeline-2026-06-09T09-05-45-244Z-9zienb-TPlJqV/final.json
+调用 dsl-to-hex (IPC) (file: 产物外置测试)
+已写出 /var/folders/ph/8jtvbjss2876zk30b1f9rbr40000gp/T/pipeline-2026-06-09T09-05-45-244Z-9zienb-TPlJqV/output.zip (2390 字节)
+✓ 已解压 → /var/folders/ph/8jtvbjss2876zk30b1f9rbr40000gp/T/pipeline-2026-06-09T09-05-45-244Z-9zienb-TPlJqV/output.hex
+✓ 所有组件均已解析
+[artifacts] 已保存: design-dsl.json → /Users/ucd/Desktop/未命名文件夹/output-artifacts/2026-06-09T09-05-45-244Z-9zienb/design-dsl.json
+[artifacts] 已保存: input-node.json → /Users/ucd/Desktop/未命名文件夹/output-artifacts/2026-06-09T09-05-45-244Z-9zienb/input-node.json
+[artifacts] 已保存: icon-result.json → /Users/ucd/Desktop/未命名文件夹/output-artifacts/2026-06-09T09-05-45-244Z-9zienb/icon-result.json
+[artifacts] 已保存: component-result.json → /Users/ucd/Desktop/未命名文件夹/output-artifacts/2026-06-09T09-05-45-244Z-9zienb/component-result.json
+[artifacts] 已保存: final-node.json → /Users/ucd/Desktop/未命名文件夹/output-artifacts/2026-06-09T09-05-45-244Z-9zienb/final-node.json
+[artifacts] 已保存: output.hex → /Users/ucd/Desktop/未命名文件夹/output-artifacts/2026-06-09T09-05-45-244Z-9zienb/output.hex
+[artifacts] 已保存: output.zip → /Users/ucd/Desktop/未命名文件夹/output-artifacts/2026-06-09T09-05-45-244Z-9zienb/output.zip
+[artifacts] 产物已保存到: /Users/ucd/Desktop/未命名文件夹/output-artifacts/2026-06-09T09-05-45-244Z-9zienb
+
+[node-dsl-pipeline HTTP] 收到关闭信号，正在清理...
+[IPCManager] iconAgent 已停止
+[IPCManager] componentService 已停止
+[IPCManager] dslToHex 已停止

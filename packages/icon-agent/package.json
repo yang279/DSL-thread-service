@@ -1,0 +1,21 @@
+{
+  "name": "@unified/icon-agent",
+  "version": "1.0.0",
+  "description": "图标智能识别与 SVG 生成服务",
+  "main": "src/core.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "start:worker": "node src/worker.js",
+    "test": "node src/test.js"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "^3.4.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "hnswlib-node": "^3.0.0",
+    "multer": "^2.1.1",
+    "openai": "^6.42.0"
+  },
+  "keywords": ["icon", "svg", "vector-search", "embedding"],
+  "license": "ISC"
+}

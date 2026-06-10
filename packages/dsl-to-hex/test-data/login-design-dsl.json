@@ -1,0 +1,822 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "source": "node-dsl",
+    "file_id": "login",
+    "file_name": "login",
+    "created_at": "2026-06-06T09:52:18.449Z",
+    "updated_at": "2026-06-06T09:52:18.449Z"
+  },
+  "pages": [
+    {
+      "id": "0:1",
+      "name": "login",
+      "layers": [
+        {
+          "id": "1:1",
+          "name": "登录页根容器",
+          "visible": true,
+          "opacity": 1,
+          "blend_mode": "normal",
+          "box": {
+            "x": 0,
+            "y": 0,
+            "width": 375,
+            "height": 812
+          },
+          "type": "frame",
+          "fills": [
+            {
+              "type": "solid",
+              "visible": true,
+              "opacity": 1,
+              "color": "#F5F5F5FF"
+            }
+          ],
+          "auto_layout": {
+            "direction": "vertical",
+            "gap": 0,
+            "counter_gap": 0,
+            "padding": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "align_items": "min",
+            "justify_content": "min",
+            "wrap": false
+          },
+          "children": [
+            {
+              "id": "1:2",
+              "name": "顶部导航栏（登录页）",
+              "visible": true,
+              "opacity": 1,
+              "blend_mode": "normal",
+              "box": {
+                "x": 0,
+                "y": 0,
+                "width": 375,
+                "height": 56
+              },
+              "type": "instance",
+              "instance": {
+                "symbol_id": "8d904830c5d567cdeade6907414a7293a4960c52",
+                "variant_key": "8d904830c5d567cdeade6907414a7293a4960c52",
+                "component_set_key": "5e64da037a37302abd96ef52af5a06aec2c9991c",
+                "component_set_resolved": false
+              }
+            },
+            {
+              "id": "1:5",
+              "name": "Logo 与品牌区域",
+              "visible": true,
+              "opacity": 1,
+              "blend_mode": "normal",
+              "box": {
+                "x": 0,
+                "y": 72,
+                "width": 375,
+                "height": 156
+              },
+              "type": "frame",
+              "auto_layout": {
+                "direction": "vertical",
+                "gap": 0,
+                "counter_gap": 0,
+                "padding": [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "align_items": "center",
+                "justify_content": "min",
+                "wrap": false
+              },
+              "children": [
+                {
+                  "id": "1:6",
+                  "name": "Logo 圆角方形背景容器",
+                  "visible": true,
+                  "opacity": 1,
+                  "blend_mode": "normal",
+                  "box": {
+                    "x": 148,
+                    "y": 8,
+                    "width": 80,
+                    "height": 80
+                  },
+                  "type": "frame",
+                  "fills": [
+                    {
+                      "type": "solid",
+                      "visible": true,
+                      "opacity": 1,
+                      "color": "#3478F6FF"
+                    }
+                  ],
+                  "effects": [
+                    {
+                      "type": "drop_shadow",
+                      "visible": true,
+                      "offset_x": 0,
+                      "offset_y": 8,
+                      "blur": 24,
+                      "spread": 0,
+                      "color": "#3478F64D"
+                    }
+                  ],
+                  "corner_radius": 24,
+                  "auto_layout": {
+                    "direction": "horizontal",
+                    "gap": 0,
+                    "counter_gap": 0,
+                    "padding": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ],
+                    "align_items": "center",
+                    "justify_content": "center",
+                    "wrap": false
+                  },
+                  "children": [
+                    {
+                      "id": "1:7",
+                      "name": "应用 Logo 主图标 48×48 中等",
+                      "visible": true,
+                      "opacity": 1,
+                      "blend_mode": "normal",
+                      "box": {
+                        "x": 16,
+                        "y": 16,
+                        "width": 48,
+                        "height": 48
+                      },
+                      "type": "frame"
+                    }
+                  ]
+                },
+                {
+                  "id": "1:8",
+                  "name": "应用名称主标题",
+                  "visible": true,
+                  "opacity": 1,
+                  "blend_mode": "normal",
+                  "box": {
+                    "x": 118,
+                    "y": 100,
+                    "width": 140,
+                    "height": 28
+                  },
+                  "type": "text",
+                  "text_content": "ICT 管理平台",
+                  "text_style": {
+                    "font_family": "HarmonyOS Sans",
+                    "font_style": "Bold",
+                    "font_size": 20,
+                    "color": "#1A1A1AFF",
+                    "letter_spacing": 0,
+                    "line_height": "auto",
+                    "align_h": "center",
+                    "align_v": "center"
+                  }
+                },
+                {
+                  "id": "1:9",
+                  "name": "应用标语副文字",
+                  "visible": true,
+                  "opacity": 1,
+                  "blend_mode": "normal",
+                  "box": {
+                    "x": 88,
+                    "y": 136,
+                    "width": 200,
+                    "height": 20
+                  },
+                  "type": "text",
+                  "text_content": "企业级一站式管理解决方案",
+                  "text_style": {
+                    "font_family": "HarmonyOS Sans",
+                    "font_style": "Regular",
+                    "font_size": 13,
+                    "color": "#666666FF",
+                    "letter_spacing": 0,
+                    "line_height": "auto",
+                    "align_h": "center",
+                    "align_v": "center"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "1:10",
+              "name": "登录表单卡片",
+              "visible": true,
+              "opacity": 1,
+              "blend_mode": "normal",
+              "box": {
+                "x": 20,
+                "y": 244,
+                "width": 335,
+                "height": 432
+              },
+              "type": "frame",
+              "fills": [
+                {
+                  "type": "solid",
+                  "visible": true,
+                  "opacity": 1,
+                  "color": "#FFFFFFFF"
+                }
+              ],
+              "effects": [
+                {
+                  "type": "drop_shadow",
+                  "visible": true,
+                  "offset_x": 0,
+                  "offset_y": 8,
+                  "blur": 32,
+                  "spread": 0,
+                  "color": "#00000014"
+                }
+              ],
+              "corner_radius": 16,
+              "auto_layout": {
+                "direction": "vertical",
+                "gap": 0,
+                "counter_gap": 0,
+                "padding": [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "align_items": "min",
+                "justify_content": "min",
+                "wrap": false
+              },
+              "children": [
+                {
+                  "id": "1:11",
+                  "name": "表单区块标题",
+                  "visible": true,
+                  "opacity": 1,
+                  "blend_mode": "normal",
+                  "box": {
+                    "x": 20,
+                    "y": 24,
+                    "width": 120,
+                    "height": 24
+                  },
+                  "type": "text",
+                  "text_content": "账号密码登录",
+                  "text_style": {
+                    "font_family": "HarmonyOS Sans",
+                    "font_style": "SemiBold",
+                    "font_size": 16,
+                    "color": "#1A1A1AFF",
+                    "letter_spacing": 0,
+                    "line_height": "auto",
+                    "align_h": "left",
+                    "align_v": "center"
+                  }
+                },
+                {
+                  "id": "1:12",
+                  "name": "用户名输入框标签文字",
+                  "visible": true,
+                  "opacity": 1,
+                  "blend_mode": "normal",
+                  "box": {
+                    "x": 20,
+                    "y": 64,
+                    "width": 60,
+                    "height": 16
+                  },
+                  "type": "text",
+                  "text_content": "账号",
+                  "text_style": {
+                    "font_family": "HarmonyOS Sans",
+                    "font_style": "Medium",
+                    "font_size": 13,
+                    "color": "#666666FF",
+                    "letter_spacing": 0,
+                    "line_height": "auto",
+                    "align_h": "left",
+                    "align_v": "center"
+                  }
+                },
+                {
+                  "id": "1:13",
+                  "name": "账号输入框（用户名或邮箱）",
+                  "visible": true,
+                  "opacity": 1,
+                  "blend_mode": "normal",
+                  "box": {
+                    "x": 20,
+                    "y": 84,
+                    "width": 295,
+                    "height": 48
+                  },
+                  "type": "instance",
+                  "instance": {
+                    "symbol_id": "8d8b43de5ec1b82347642af38f3a00f77d462d78",
+                    "variant_key": "8d8b43de5ec1b82347642af38f3a00f77d462d78",
+                    "component_set_key": "877809c8244fba071a3d111c1cfc92c230130da7",
+                    "component_set_resolved": false
+                  }
+                },
+                {
+                  "id": "1:15",
+                  "name": "密码输入框标签文字",
+                  "visible": true,
+                  "opacity": 1,
+                  "blend_mode": "normal",
+                  "box": {
+                    "x": 20,
+                    "y": 148,
+                    "width": 60,
+                    "height": 16
+                  },
+                  "type": "text",
+                  "text_content": "密码",
+                  "text_style": {
+                    "font_family": "HarmonyOS Sans",
+                    "font_style": "Medium",
+                    "font_size": 13,
+                    "color": "#666666FF",
+                    "letter_spacing": 0,
+                    "line_height": "auto",
+                    "align_h": "left",
+                    "align_v": "center"
+                  }
+                },
+                {
+                  "id": "1:16",
+                  "name": "密码输入框",
+                  "visible": true,
+                  "opacity": 1,
+                  "blend_mode": "normal",
+                  "box": {
+                    "x": 20,
+                    "y": 168,
+                    "width": 295,
+                    "height": 48
+                  },
+                  "type": "instance",
+                  "instance": {
+                    "symbol_id": "4b95c493043df43a1d97efd03861d9244ef10d4c",
+                    "variant_key": "4b95c493043df43a1d97efd03861d9244ef10d4c",
+                    "component_set_key": "877809c8244fba071a3d111c1cfc92c230130da7",
+                    "component_set_resolved": false
+                  }
+                },
+                {
+                  "id": "1:19",
+                  "name": "忘记密码链接文字",
+                  "visible": true,
+                  "opacity": 1,
+                  "blend_mode": "normal",
+                  "box": {
+                    "x": 235,
+                    "y": 228,
+                    "width": 80,
+                    "height": 20
+                  },
+                  "type": "text",
+                  "text_content": "忘记密码？",
+                  "text_style": {
+                    "font_family": "HarmonyOS Sans",
+                    "font_style": "Regular",
+                    "font_size": 13,
+                    "color": "#3478F6FF",
+                    "letter_spacing": 0,
+                    "line_height": "auto",
+                    "align_h": "right",
+                    "align_v": "center"
+                  }
+                },
+                {
+                  "id": "1:20",
+                  "name": "主登录按钮（蓝色主操作，large）",
+                  "visible": true,
+                  "opacity": 1,
+                  "blend_mode": "normal",
+                  "box": {
+                    "x": 20,
+                    "y": 260,
+                    "width": 295,
+                    "height": 48
+                  },
+                  "type": "instance",
+                  "instance": {
+                    "symbol_id": "7f599a2db9d8ac901cf4c858825d1e04221d3021",
+                    "variant_key": "7f599a2db9d8ac901cf4c858825d1e04221d3021",
+                    "component_set_key": "9a9da828027b6bdc773731bb333817c0799c208d",
+                    "component_set_resolved": false
+                  }
+                },
+                {
+                  "id": "1:21",
+                  "name": "其他登录方式分割线行",
+                  "visible": true,
+                  "opacity": 1,
+                  "blend_mode": "normal",
+                  "box": {
+                    "x": 20,
+                    "y": 324,
+                    "width": 295,
+                    "height": 20
+                  },
+                  "type": "frame",
+                  "auto_layout": {
+                    "direction": "horizontal",
+                    "gap": 8,
+                    "counter_gap": 0,
+                    "padding": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ],
+                    "align_items": "center",
+                    "justify_content": "min",
+                    "wrap": false
+                  },
+                  "children": [
+                    {
+                      "id": "1:22",
+                      "name": "左侧水平分割线",
+                      "visible": true,
+                      "opacity": 1,
+                      "blend_mode": "normal",
+                      "box": {
+                        "x": 0,
+                        "y": 10,
+                        "width": 104,
+                        "height": 1
+                      },
+                      "type": "frame",
+                      "fills": [
+                        {
+                          "type": "solid",
+                          "visible": true,
+                          "opacity": 1,
+                          "color": "#E5E5E5FF"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "1:23",
+                      "name": "分割线中间说明文字",
+                      "visible": true,
+                      "opacity": 1,
+                      "blend_mode": "normal",
+                      "box": {
+                        "x": 112,
+                        "y": 0,
+                        "width": 72,
+                        "height": 20
+                      },
+                      "type": "text",
+                      "text_content": "其他登录方式",
+                      "text_style": {
+                        "font_family": "HarmonyOS Sans",
+                        "font_style": "Regular",
+                        "font_size": 12,
+                        "color": "#999999FF",
+                        "letter_spacing": 0,
+                        "line_height": "auto",
+                        "align_h": "center",
+                        "align_v": "center"
+                      }
+                    },
+                    {
+                      "id": "1:24",
+                      "name": "右侧水平分割线",
+                      "visible": true,
+                      "opacity": 1,
+                      "blend_mode": "normal",
+                      "box": {
+                        "x": 192,
+                        "y": 10,
+                        "width": 103,
+                        "height": 1
+                      },
+                      "type": "frame",
+                      "fills": [
+                        {
+                          "type": "solid",
+                          "visible": true,
+                          "opacity": 1,
+                          "color": "#E5E5E5FF"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "id": "1:25",
+                  "name": "第三方登录图标行",
+                  "visible": true,
+                  "opacity": 1,
+                  "blend_mode": "normal",
+                  "box": {
+                    "x": 20,
+                    "y": 360,
+                    "width": 295,
+                    "height": 48
+                  },
+                  "type": "frame",
+                  "auto_layout": {
+                    "direction": "horizontal",
+                    "gap": 40,
+                    "counter_gap": 0,
+                    "padding": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ],
+                    "align_items": "center",
+                    "justify_content": "center",
+                    "wrap": false
+                  },
+                  "children": [
+                    {
+                      "id": "1:26",
+                      "name": "微信登录圆形按钮容器",
+                      "visible": true,
+                      "opacity": 1,
+                      "blend_mode": "normal",
+                      "box": {
+                        "x": 36,
+                        "y": 0,
+                        "width": 48,
+                        "height": 48
+                      },
+                      "type": "frame",
+                      "fills": [
+                        {
+                          "type": "solid",
+                          "visible": true,
+                          "opacity": 1,
+                          "color": "#FFFFFFFF"
+                        }
+                      ],
+                      "strokes": [
+                        {
+                          "type": "solid",
+                          "visible": true,
+                          "opacity": 1,
+                          "color": "#E5E5E5FF"
+                        }
+                      ],
+                      "corner_radius": 24,
+                      "auto_layout": {
+                        "direction": "horizontal",
+                        "gap": 0,
+                        "counter_gap": 0,
+                        "padding": [
+                          0,
+                          0,
+                          0,
+                          0
+                        ],
+                        "align_items": "center",
+                        "justify_content": "center",
+                        "wrap": false
+                      },
+                      "children": [
+                        {
+                          "id": "1:27",
+                          "name": "微信登录图标 24×24 填充",
+                          "visible": true,
+                          "opacity": 1,
+                          "blend_mode": "normal",
+                          "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 24,
+                            "height": 24
+                          },
+                          "type": "frame"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "1:28",
+                      "name": "QQ 登录圆形按钮容器",
+                      "visible": true,
+                      "opacity": 1,
+                      "blend_mode": "normal",
+                      "box": {
+                        "x": 124,
+                        "y": 0,
+                        "width": 48,
+                        "height": 48
+                      },
+                      "type": "frame",
+                      "fills": [
+                        {
+                          "type": "solid",
+                          "visible": true,
+                          "opacity": 1,
+                          "color": "#FFFFFFFF"
+                        }
+                      ],
+                      "strokes": [
+                        {
+                          "type": "solid",
+                          "visible": true,
+                          "opacity": 1,
+                          "color": "#E5E5E5FF"
+                        }
+                      ],
+                      "corner_radius": 24,
+                      "auto_layout": {
+                        "direction": "horizontal",
+                        "gap": 0,
+                        "counter_gap": 0,
+                        "padding": [
+                          0,
+                          0,
+                          0,
+                          0
+                        ],
+                        "align_items": "center",
+                        "justify_content": "center",
+                        "wrap": false
+                      },
+                      "children": [
+                        {
+                          "id": "1:29",
+                          "name": "QQ 登录图标 24×24 填充",
+                          "visible": true,
+                          "opacity": 1,
+                          "blend_mode": "normal",
+                          "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 24,
+                            "height": 24
+                          },
+                          "type": "frame"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "1:30",
+                      "name": "Apple 登录圆形按钮容器",
+                      "visible": true,
+                      "opacity": 1,
+                      "blend_mode": "normal",
+                      "box": {
+                        "x": 212,
+                        "y": 0,
+                        "width": 48,
+                        "height": 48
+                      },
+                      "type": "frame",
+                      "fills": [
+                        {
+                          "type": "solid",
+                          "visible": true,
+                          "opacity": 1,
+                          "color": "#FFFFFFFF"
+                        }
+                      ],
+                      "strokes": [
+                        {
+                          "type": "solid",
+                          "visible": true,
+                          "opacity": 1,
+                          "color": "#E5E5E5FF"
+                        }
+                      ],
+                      "corner_radius": 24,
+                      "auto_layout": {
+                        "direction": "horizontal",
+                        "gap": 0,
+                        "counter_gap": 0,
+                        "padding": [
+                          0,
+                          0,
+                          0,
+                          0
+                        ],
+                        "align_items": "center",
+                        "justify_content": "center",
+                        "wrap": false
+                      },
+                      "children": [
+                        {
+                          "id": "1:31",
+                          "name": "Apple 登录图标 24×24 填充",
+                          "visible": true,
+                          "opacity": 1,
+                          "blend_mode": "normal",
+                          "box": {
+                            "x": 12,
+                            "y": 12,
+                            "width": 24,
+                            "height": 24
+                          },
+                          "type": "frame"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "1:32",
+              "name": "注册引导行",
+              "visible": true,
+              "opacity": 1,
+              "blend_mode": "normal",
+              "box": {
+                "x": 0,
+                "y": 692,
+                "width": 375,
+                "height": 24
+              },
+              "type": "frame",
+              "auto_layout": {
+                "direction": "horizontal",
+                "gap": 4,
+                "counter_gap": 0,
+                "padding": [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "align_items": "center",
+                "justify_content": "center",
+                "wrap": false
+              },
+              "children": [
+                {
+                  "id": "1:33",
+                  "name": "注册引导提示文字",
+                  "visible": true,
+                  "opacity": 1,
+                  "blend_mode": "normal",
+                  "box": {
+                    "x": 107,
+                    "y": 0,
+                    "width": 90,
+                    "height": 24
+                  },
+                  "type": "text",
+                  "text_content": "还没有账号？",
+                  "text_style": {
+                    "font_family": "HarmonyOS Sans",
+                    "font_style": "Regular",
+                    "font_size": 14,
+                    "color": "#666666FF",
+                    "letter_spacing": 0,
+                    "line_height": "auto",
+                    "align_h": "left",
+                    "align_v": "center"
+                  }
+                },
+                {
+                  "id": "1:34",
+                  "name": "立即注册链接文字",
+                  "visible": true,
+                  "opacity": 1,
+                  "blend_mode": "normal",
+                  "box": {
+                    "x": 201,
+                    "y": 0,
+                    "width": 68,
+                    "height": 24
+                  },
+                  "type": "text",
+                  "text_content": "立即注册",
+                  "text_style": {
+                    "font_family": "HarmonyOS Sans",
+                    "font_style": "Medium",
+                    "font_size": 14,
+                    "color": "#3478F6FF",
+                    "letter_spacing": 0,
+                    "line_height": "auto",
+                    "align_h": "left",
+                    "align_v": "center"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

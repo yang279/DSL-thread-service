@@ -1,0 +1,24 @@
+{
+  "name": "unified-dsl-pipeline",
+  "version": "1.0.0",
+  "description": "统一的 DSL 处理流程 - 从 node-dsl 到 Pixso hex",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "bootstrap": "npm install",
+    "start": "npm run start --workspace=@unified/pipeline-server",
+    "start:icon": "npm run start --workspace=@unified/icon-agent",
+    "start:component": "npm run start --workspace=@unified/component-service",
+    "start:hex": "npm run start --workspace=@unified/dsl-to-hex",
+    "test": "npm run test --workspaces --if-present",
+    "clean": "npm run clean --workspaces --if-present && rm -rf node_modules package-lock.json",
+    "health": "curl -s http://localhost:3104/health || echo '服务未启动'",
+    "pipeline": "curl -X POST http://localhost:3104/pipeline"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

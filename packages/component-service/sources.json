@@ -1,0 +1,7 @@
+{
+  "sources": [
+    { "key": "h-design-light", "label": "H Design 浅色样式库" },
+    { "key": "h-design-chart", "label": "H Design 图表库" },
+    { "key": "ict-ui",         "label": "ICT UI 组件库" }
+  ]
+}
