@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"require\\('dotenv'\\)\")",
+      "Skill(run)",
+      "Skill(run:*)",
+      "Bash(node server.js)",
+      "Bash(curl -s http://localhost:3104/health)",
+      "Bash(xargs kill -9)"
+    ]
+  }
+}
