@@ -29,11 +29,13 @@ async function getClient() {
   return globalClient;
 }
 
-function saveArtifact(id, { pageName, stats, missingKeys, hexPath, zipPath }) {
+function saveArtifact(id, { pageName, stats, missingKeys, hexPath, zipPath, rawIconsPath, rawCompsPath }) {
   const dir = path.join(ARTIFACTS_DIR, id);
   fs.mkdirSync(dir, { recursive: true });
   fs.copyFileSync(hexPath, path.join(dir, 'output.hex'));
   fs.copyFileSync(zipPath, path.join(dir, 'output.zip'));
+  if (rawIconsPath && fs.existsSync(rawIconsPath)) fs.copyFileSync(rawIconsPath, path.join(dir, 'raw-icons.json'));
+  if (rawCompsPath && fs.existsSync(rawCompsPath)) fs.copyFileSync(rawCompsPath, path.join(dir, 'raw-components.json'));
   fs.writeFileSync(path.join(dir, 'meta.json'), JSON.stringify({
     id,
     page_name:    pageName,
@@ -70,6 +72,7 @@ app.post('/pipeline', upload.single('file'), async (req, res) => {
     }
 
     const { page_name, skip_enrich } = req.body || {};
+    const skipEnrich = skip_enrich === true || skip_enrich === 'true' || skip_enrich === '1';
 
     fs.writeFileSync(tmpPath, req.file.buffer);
     const inputData = JSON.parse(req.file.buffer.toString('utf8'));
@@ -80,7 +83,7 @@ app.post('/pipeline', upload.single('file'), async (req, res) => {
     let finalSchema = inputData;
     let enrichStats = { icons: 0, components: 0 };
 
-    if (!skip_enrich) {
+    if (!skipEnrich) {
       finalSchema = await enrich(tmpPath, tmpDir, client);
 
       const rawIconsPath = path.join(tmpDir, 'raw-icons.json');
@@ -105,7 +108,11 @@ app.post('/pipeline', upload.single('file'), async (req, res) => {
 
     // 存储产物
     const artifactId = `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-    saveArtifact(artifactId, { pageName, stats, missingKeys, hexPath, zipPath });
+    saveArtifact(artifactId, {
+      pageName, stats, missingKeys, hexPath, zipPath,
+      rawIconsPath: path.join(tmpDir, 'raw-icons.json'),
+      rawCompsPath: path.join(tmpDir, 'raw-components.json'),
+    });
     console.log(`[pipeline] 产物已存储: ${artifactId}`);
 
     res.json({

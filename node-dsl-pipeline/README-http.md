@@ -1,6 +1,10 @@
 # node-dsl-pipeline HTTP 服务
 
-完整的 node-dsl 处理流程 HTTP API，监听端口 **3104**。
+接收 node-dsl schema JSON，经过节点补全、DSL 转换、hex 导出三步流水线，输出 Pixso 可导入的 hex 文件。
+
+- 默认端口：**3204**
+- 启动时自动 fork 三个 IPC 子进程（icon-agent、component-service、dsl-to-hex）
+- 子进程路径通过 `.env` 配置，支持绝对路径
 
 ## 快速启动
 
@@ -10,14 +14,26 @@ cd node-dsl-pipeline
 # 安装依赖
 npm install
 
-# 启动 HTTP 服务（默认 IPC 模式）
+# 启动服务
 npm run server
 
-# 或指定 HTTP 模式
-DEFAULT_MODE=http npm run server
-
 # 自定义端口
-PORT=3200 npm run server
+PORT=3300 npm run server
+```
+
+## 配置（.env）
+
+```env
+# 子进程 worker 路径（绝对路径或相对于 node-dsl-pipeline/ 的路径）
+ICON_AGENT_WORKER=../workers/icon-agent/worker.js
+COMPONENT_SERVICE_WORKER=/绝对路径/component-service/worker.js
+DSL_TO_HEX_WORKER=/绝对路径/dsl-to-hex/worker.js
+
+# 服务端口
+PORT=3204
+
+# 产物存储目录
+ARTIFACTS_DIR=../artifacts
 ```
 
 ## API 接口
@@ -26,315 +42,85 @@ PORT=3200 npm run server
 
 健康检查。
 
-**响应：**
+```bash
+curl http://localhost:3204/health
+```
+
 ```json
-{
-  "status": "ok",
-  "mode": "ipc",
-  "port": 3104
-}
+{ "status": "ok", "initialized": true, "port": 3204 }
 ```
 
 ---
 
 ### POST /init
 
-初始化服务模式（IPC 或 HTTP）。
+手动初始化子进程。服务启动时自动执行，失败时可手动重试。
 
-**请求体：**
-```json
-{
-  "mode": "ipc"  // 或 "http"
-}
+```bash
+curl -X POST http://localhost:3204/init
 ```
 
-**响应：**
 ```json
-{
-  "status": "initialized",
-  "mode": "ipc"
-}
+{ "status": "initialized" }
 ```
 
 ---
 
 ### POST /pipeline
 
-完整流程：补全节点信息 → 转 design-dsl → 导出 hex。
+完整流程：node-dsl → 补全图标/组件 → design-dsl → hex。
 
-**请求方式（三种）：**
-
-1. **文件上传**
 ```bash
-curl -X POST http://localhost:3104/pipeline \
+curl -X POST http://localhost:3204/pipeline \
   -F "file=@input.json" \
-  -F "mode=ipc" \
   -F "page_name=登录页"
 ```
 
-2. **JSON body（带 data 字段）**
-```bash
-curl -X POST http://localhost:3104/pipeline \
-  -H "Content-Type: application/json" \
-  -d '{
-    "mode": "ipc",
-    "page_name": "登录页",
-    "data": {
-      "meta": { "file_name": "test" },
-      "pages": [...]
-    }
-  }'
-```
+**参数**
 
-3. **跳过补全（直接转换已有的 final.json）**
-```bash
-curl -X POST http://localhost:3104/pipeline \
-  -F "file=@final.json" \
-  -F "skip_enrich=true"
-```
+| 参数 | 类型 | 必填 | 说明 |
+|---|---|---|---|
+| `file` | multipart | 是 | node-dsl JSON 文件 |
+| `page_name` | string | 否 | 页面名称，默认取 `meta.file_name` 或 `Page 1` |
+| `skip_enrich` | boolean | 否 | 跳过节点补全，输入须已含 `iconSvg` 和 `component` 字段 |
 
-**参数：**
+**响应**
 
-| 参数 | 类型 | 默认值 | 说明 |
-|------|------|--------|------|
-| `mode` | string | `"ipc"` | 运行模式（ipc 或 http） |
-| `page_name` | string | 文件名 | design-dsl 页面名称 |
-| `skip_enrich` | boolean | `false` | 跳过补全节点信息 |
-
-**响应：**
 ```json
 {
   "success": true,
+  "artifact_id": "1749558000000-ab3f2",
   "stats": {
-    "enrich": {
-      "icons": 1,
-      "components": 3
-    },
-    "layers": {
-      "total": 10,
-      "frames": 2,
-      "texts": 5,
-      "instances": 3
-    },
+    "enrich": { "icons": 1, "components": 3 },
+    "layers": { "total": 10, "frames": 2, "texts": 5, "instances": 3, "placeholders": 1 },
     "missing_keys": 0
   },
-  "hex": "...pixso binary hex content...",
-  "zip": "UEsDBAoAAAAAAMh...",
+  "zip": "<base64 编码的 zip>",
   "missing_keys": []
 }
 ```
 
----
-
-### POST /enrich
-
-仅补全节点信息（icon + component）。
-
-**请求：**
-```bash
-curl -X POST http://localhost:3104/enrich \
-  -F "file=@input.json" \
-  -F "mode=ipc"
-```
-
-**响应：**
-```json
-{
-  "success": true,
-  "final": {...补全后的完整 node-dsl},
-  "raw_icons": {...iconAgent 原始响应},
-  "raw_components": [...component-service 原始响应]
-}
-```
-
----
-
-### POST /convert
-
-仅转换 design-dsl 为 hex（不补全节点）。
-
-**请求：**
-```bash
-curl -X POST http://localhost:3104/convert \
-  -H "Content-Type: application/json" \
-  -d '{
-    "mode": "ipc",
-    "page_name": "登录页",
-    "dsl": {
-      "meta": {...},
-      "pages": [...]
-    }
-  }'
-```
-
-**响应：**
-```json
-{
-  "success": true,
-  "stats": {
-    "layers": {...},
-    "missing_keys": 0
-  },
-  "hex": "...",
-  "zip": "UEsDBAoAAAAAAMh...",
-  "missing_keys": []
-}
-```
+zip 解压后含 `output.hex` 及 svg/png 资源。产物同时存储于 `artifacts/<artifact_id>/` 目录。
 
 ---
 
 ### POST /shutdown
 
-关闭服务（优雅退出）。
+关闭服务并终止所有子进程。
 
-**响应：**
+```bash
+curl -X POST http://localhost:3204/shutdown
+```
+
+---
+
+## 错误响应
+
 ```json
-{
-  "status": "shutting down"
-}
+{ "error": "错误信息" }
 ```
 
----
-
-## 运行模式
-
-### IPC 模式（推荐）
-
-- **无需启动额外服务**
-- node-dsl-pipeline 自动 fork 子进程
-- 性能更好（无 HTTP 序列化开销）
-- 一键部署
-
-```bash
-npm run server  # 默认 IPC 模式
-```
-
-### HTTP 模式
-
-- **需要先启动三个服务**
-- 支持独立调试每个服务
-- 适合开发环境
-
-```bash
-# 先启动三个子服务
-node wonderfulj-main/src/server.js          # 端口 3103
-node nodejs/component-service/server.js      # 端口 3102
-node nodejs/dsl-to-hex/server.js             # 端口 3101
-
-# 然后启动主服务
-DEFAULT_MODE=http npm run server             # 端口 3104
-```
-
----
-
-## 部署建议
-
-### 生产环境（推荐 IPC 模式）
-
-```bash
-# 直接启动，无需额外依赖服务
-PORT=3104 npm run server
-```
-
-### Docker 部署示例
-
-```dockerfile
-FROM node:18-alpine
-
-WORKDIR /app
-
-COPY node-dsl-pipeline ./node-dsl-pipeline
-COPY wonderfulj-main ./wonderfulj-main
-COPY nodejs ./nodejs
-
-RUN cd node-dsl-pipeline && npm install --production
-
-EXPOSE 3104
-
-CMD ["node", "node-dsl-pipeline/server.js"]
-```
-
-### PM2 部署
-
-```bash
-pm2 start server.js --name node-dsl-pipeline
-```
-
----
-
-## 错误处理
-
-所有错误响应格式：
-```json
-{
-  "error": "错误信息"
-}
-```
-
-常见错误：
-- `400` - 请求参数错误
-- `500` - 处理失败（服务内部错误）
-
----
-
-## 性能对比
-
-| 指标 | IPC 模式 | HTTP 模式 |
-|------|----------|-----------|
-| 进程数 | 1 个（主进程 + 3 子进程） | 4 个独立进程 |
-| 通信方式 | process.send/on | HTTP 请求 |
-| 序列化开销 | 无 | JSON → HTTP |
-| 启动时间 | ~10秒（初始化 WASM） | ~10秒 + 手动启动3服务 |
-| 适用场景 | 生产部署 | 开发调试 |
-
----
-
-## 示例调用
-
-```bash
-# 1. 健康检查
-curl http://localhost:3104/health
-
-# 2. 完整流程
-curl -X POST http://localhost:3104/pipeline \
-  -F "file=@login-node.json" \
-  -F "page_name=登录页"
-
-# 3. 获取结果（hex + zip）
-curl -X POST http://localhost:3104/pipeline \
-  -H "Content-Type: application/json" \
-  -d @- <<EOF
-{
-  "data": {
-    "meta": { "file_name": "test" },
-    "pages": [{
-      "id": "0:1",
-      "name": "Page 1",
-      "layers": [
-        {
-          "id": "1:1",
-          "name": "Button",
-          "type": "instance",
-          "semantic": "button",
-          "label": "确定按钮",
-          "nid": 1
-        }
-      ]
-    }]
-  }
-}
-EOF
-```
-
----
-
-## 端口规划
-
-| 服务 | 端口 | 说明 |
-|------|------|------|
-| node-dsl-pipeline (HTTP 服务) | **3104** | 主服务（本次新增） |
-| iconAgent | 3103 | 图标解析服务 |
-| component-service | 3102 | 组件匹配服务 |
-| dsl-to-hex | 3101 | DSL 转 hex 服务 |
-
-IPC 模式下，3101/3102/3103 不监听端口，仅在进程内通信。
+| 状态码 | 说明 |
+|---|---|
+| `400` | 请求参数错误（未上传文件等） |
+| `500` | 处理失败 |

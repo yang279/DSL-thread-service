@@ -13,7 +13,12 @@
       "Bash(npm install *)",
       "Bash(find /Users/ucd/Downloads/C2D-main -name \"search_index.json\" 2>/dev/null)",
       "Read(//Users/ucd/Downloads/C2D-main/**)",
-      "Bash(node test/verify-workers.js)"
+      "Bash(node test/verify-workers.js)",
+      "Read(//private/tmp/**)",
+      "Bash(ls -t /var/folders/ 2>/dev/null | head -3; find /private/var/folders -name \"pipeline-output-*\" -maxdepth 6 2>/dev/null | head -5)",
+      "Read(//private/var/folders/**)",
+      "Bash(kill 10418 11828)",
+      "Bash(xargs ls)"
     ],
     "additionalDirectories": [
       "/Users/ucd/Downloads/C2D-main/dsl-match-service"
