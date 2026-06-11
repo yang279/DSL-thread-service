@@ -189,26 +189,40 @@ function convertNode(node, parentRect) {
     };
   }
 
-  // icon → frame with placeholder
+  // icon → rectangle
   if (node.layerType === 'icon') {
-    const layer = { ...base, type: 'frame' };
-    layer.placeholder = {
-      is_placeholder:   true,
-      replacement_type: 'svg',
-      ...(node.iconSvg ? { note: node.iconSvg } : {}),
-    };
+    const layer = { ...base, type: 'rectangle' };
+    const fills   = buildFills(style);
+    const strokes = buildStrokes(style);
+    const corners = buildCornerRadius(style);
+    if (fills.length)                  layer.fills         = fills;
+    if (strokes.length)                layer.strokes       = strokes;
+    if (corners.corner_radius != null) layer.corner_radius = corners.corner_radius;
+    if (corners.corner_radii)          layer.corner_radii  = corners.corner_radii;
     return layer;
   }
 
-  // image → frame with image fill（src 优先，fallback backgroundImage）
+  // image：有子节点 → frame，无子节点 → rectangle
   if (node.layerType === 'image') {
-    const layer = { ...base, type: 'frame' };
+    const hasKids = (node.children || []).length > 0;
     const src = node.src || (style.backgroundImage && style.backgroundImage.startsWith('url(')
       ? style.backgroundImage.match(/url\(["']?([^"')]+)["']?\)/)?.[1]
       : null);
-    if (src) {
-      layer.fills = [{ type: 'image', visible: true, opacity: 1, image_hash: src.split('/').pop().replace(/\.[^.]+$/, '') }];
+    const imageFill = src
+      ? [{ type: 'image', visible: true, opacity: 1, image_hash: src.split('/').pop().replace(/\.[^.]+$/, '') }]
+      : [];
+    if (!hasKids) {
+      const layer = { ...base, type: 'rectangle' };
+      if (imageFill.length) layer.fills = imageFill;
+      return layer;
     }
+    const layer = { ...base, type: 'frame' };
+    if (imageFill.length) layer.fills = imageFill;
+    const kids = (node.children || []).filter(c => {
+      const cr = c.rect;
+      return cr && (cr.w > 0 || cr.h > 0 || (c.children || []).length > 0);
+    });
+    if (kids.length) layer.children = kids.map(c => convertNode(c, r));
     return layer;
   }
 

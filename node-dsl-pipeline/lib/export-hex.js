@@ -12,9 +12,6 @@ async function exportHex(dsl, outDir, client) {
 
   const result = await client.callDslToHexConvert(dsl);
 
-  const { zip, ...resultMeta } = result;
-  fs.writeFileSync(path.join(outDir, 'dsl-to-hex-result.json'), JSON.stringify(resultMeta, null, 2), 'utf8');
-
   if (!result.zip) {
     throw new Error(`dsl2hex 转换失败：${result.error || JSON.stringify(result)}（design-dsl 已保留于 ${designDslPath}）`);
   }
