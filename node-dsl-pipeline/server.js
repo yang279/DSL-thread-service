@@ -13,6 +13,7 @@ const { buildDesignDsl, countLayers } = require('./lib/design-dsl');
 const { exportHex }                   = require('./lib/export-hex');
 
 const app          = express();
+const HOST         = process.env.HOST || 'localhost';
 const PORT         = Number(process.env.PORT) || 3204;
 const ARTIFACTS_DIR = path.resolve(process.env.ARTIFACTS_DIR || path.join(__dirname, '../artifacts'));
 const upload       = multer({ storage: multer.memoryStorage() });
@@ -29,10 +30,9 @@ async function getClient() {
   return globalClient;
 }
 
-function saveArtifact(id, { pageName, stats, missingKeys, hexPath, zipPath, rawIconsPath, rawCompsPath, nodeDslPath, designDslPath }) {
+function saveArtifact(id, { pageName, stats, missingKeys, zipPath, rawIconsPath, rawCompsPath, nodeDslPath, designDslPath }) {
   const dir = path.join(ARTIFACTS_DIR, id);
   fs.mkdirSync(dir, { recursive: true });
-  fs.copyFileSync(hexPath, path.join(dir, 'output.hex'));
   fs.copyFileSync(zipPath, path.join(dir, 'output.zip'));
   if (rawIconsPath  && fs.existsSync(rawIconsPath))  fs.copyFileSync(rawIconsPath,  path.join(dir, 'raw-icons.json'));
   if (rawCompsPath  && fs.existsSync(rawCompsPath))  fs.copyFileSync(rawCompsPath,  path.join(dir, 'raw-components.json'));
@@ -105,13 +105,13 @@ app.post('/pipeline', upload.single('file'), async (req, res) => {
     const layers   = countLayers(dsl.pages[0].layers);
     const stats    = { enrich: enrichStats, layers, missing_keys: 0 };
 
-    const { hexPath, missingKeys, zipPath } = await exportHex(dsl, tmpDir, client);
+    const { missingKeys, zipPath } = await exportHex(dsl, tmpDir, client);
     stats.missing_keys = missingKeys.length;
 
     // 存储产物
     const artifactId = `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
     saveArtifact(artifactId, {
-      pageName, stats, missingKeys, hexPath, zipPath,
+      pageName, stats, missingKeys, zipPath,
       rawIconsPath:  path.join(tmpDir, 'raw-icons.json'),
       rawCompsPath:  path.join(tmpDir, 'raw-components.json'),
       nodeDslPath:   path.join(tmpDir, 'final.json'),
@@ -150,8 +150,8 @@ const gracefulShutdown = () => {
 process.on('SIGINT',  gracefulShutdown);
 process.on('SIGTERM', gracefulShutdown);
 
-app.listen(PORT, async () => {
-  console.log(`[node-dsl-pipeline] 服务已启动: http://localhost:${PORT}`);
+app.listen(PORT, HOST, async () => {
+  console.log(`[node-dsl-pipeline] 服务已启动: http://${HOST}:${PORT}`);
   console.log('  GET  /health              健康检查');
   console.log('  POST /init                初始化子进程');
   console.log('  POST /pipeline            完整流程（补全 + 转 DSL + 导出 hex）');

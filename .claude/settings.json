@@ -19,7 +19,15 @@
       "Read(//private/var/folders/**)",
       "Bash(kill 10418 11828)",
       "Bash(xargs ls)",
-      "Bash(chmod +x /Users/ucd/Desktop/DSL-thread-service/start.sh /Users/ucd/Desktop/DSL-thread-service/stop.sh)"
+      "Bash(chmod +x /Users/ucd/Desktop/DSL-thread-service/start.sh /Users/ucd/Desktop/DSL-thread-service/stop.sh)",
+      "Bash(unzip -l /var/folders/ph/8jtvbjss2876zk30b1f9rbr40000gp/T/pipeline-output-1zs0CG/output.zip)",
+      "Bash(find /Users/ucd -name \"search_index.json\" 2>/dev/null | head -5)",
+      "Read(//Users/ucd/**)",
+      "Bash(echo \"PID: $!\")",
+      "Bash(python3 -m json.tool)",
+      "Bash(pkill -f \"node.*server.js\")",
+      "Bash(pkill -f \"node-dsl-pipeline\")",
+      "Bash(curl -s -X POST http://localhost:3204/init)"
     ],
     "additionalDirectories": [
       "/Users/ucd/Downloads/C2D-main/dsl-match-service"

@@ -2,7 +2,6 @@
 
 const fs   = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
 
 async function exportHex(dsl, outDir, client) {
   console.log(`调用 dsl-to-hex (file: ${dsl.meta?.file_name || 'design-dsl'})`);
@@ -19,11 +18,7 @@ async function exportHex(dsl, outDir, client) {
   const zipPath = path.join(outDir, 'output.zip');
   const zipBuf  = Buffer.from(result.zip, 'base64');
   fs.writeFileSync(zipPath, zipBuf);
-  console.log(`已写出 ${zipPath} (${zipBuf.length} 字节)`);
-
-  execSync(`unzip -o "${zipPath}" -d "${outDir}"`, { stdio: 'pipe' });
-  const hexPath = path.join(outDir, 'output.hex');
-  console.log(`✓ 已解压 → ${hexPath}`);
+  console.log(`✓ 已写出 ${zipPath} (${zipBuf.length} 字节)`);
 
   const missingKeys = result.missing_keys || [];
   if (missingKeys.length) {
@@ -32,7 +27,7 @@ async function exportHex(dsl, outDir, client) {
     console.log('✓ 所有组件均已解析');
   }
 
-  return { zipPath, hexPath, missingKeys };
+  return { zipPath, missingKeys };
 }
 
 module.exports = { exportHex };
