@@ -29,13 +29,15 @@ async function getClient() {
   return globalClient;
 }
 
-function saveArtifact(id, { pageName, stats, missingKeys, hexPath, zipPath, rawIconsPath, rawCompsPath }) {
+function saveArtifact(id, { pageName, stats, missingKeys, hexPath, zipPath, rawIconsPath, rawCompsPath, designDslPath, dslToHexResPath }) {
   const dir = path.join(ARTIFACTS_DIR, id);
   fs.mkdirSync(dir, { recursive: true });
   fs.copyFileSync(hexPath, path.join(dir, 'output.hex'));
   fs.copyFileSync(zipPath, path.join(dir, 'output.zip'));
-  if (rawIconsPath && fs.existsSync(rawIconsPath)) fs.copyFileSync(rawIconsPath, path.join(dir, 'raw-icons.json'));
-  if (rawCompsPath && fs.existsSync(rawCompsPath)) fs.copyFileSync(rawCompsPath, path.join(dir, 'raw-components.json'));
+  if (rawIconsPath    && fs.existsSync(rawIconsPath))    fs.copyFileSync(rawIconsPath,    path.join(dir, 'raw-icons.json'));
+  if (rawCompsPath    && fs.existsSync(rawCompsPath))    fs.copyFileSync(rawCompsPath,    path.join(dir, 'raw-components.json'));
+  if (designDslPath   && fs.existsSync(designDslPath))   fs.copyFileSync(designDslPath,   path.join(dir, 'design-dsl.json'));
+  if (dslToHexResPath && fs.existsSync(dslToHexResPath)) fs.copyFileSync(dslToHexResPath, path.join(dir, 'dsl-to-hex-result.json'));
   fs.writeFileSync(path.join(dir, 'meta.json'), JSON.stringify({
     id,
     page_name:    pageName,
@@ -110,8 +112,10 @@ app.post('/pipeline', upload.single('file'), async (req, res) => {
     const artifactId = `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
     saveArtifact(artifactId, {
       pageName, stats, missingKeys, hexPath, zipPath,
-      rawIconsPath: path.join(tmpDir, 'raw-icons.json'),
-      rawCompsPath: path.join(tmpDir, 'raw-components.json'),
+      rawIconsPath:      path.join(tmpDir, 'raw-icons.json'),
+      rawCompsPath:      path.join(tmpDir, 'raw-components.json'),
+      designDslPath:     path.join(tmpDir, 'design-dsl.json'),
+      dslToHexResPath:   path.join(tmpDir, 'dsl-to-hex-result.json'),
     });
     console.log(`[pipeline] 产物已存储: ${artifactId}`);
 

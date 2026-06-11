@@ -112,7 +112,7 @@ function fontWeightToStyle(w) {
 }
 
 function buildTextStyle(style) {
-  const ts = { font_family: 'HarmonyOS Sans' };
+  const ts = { font_family: style.fontFamily || 'HarmonyOS Sans' };
   ts.font_style     = fontWeightToStyle(style.fontWeight);
   ts.font_size      = style.fontSize ? parseFloat(style.fontSize) : 14;
   const color       = cssColorToHex(style.color);
@@ -155,9 +155,6 @@ function buildAutoLayout(style) {
 
 // ── 节点转换（递归） ──────────────────────────────────────────────────────────
 
-const COMPONENT_SEMANTICS = new Set(['button', 'input', 'navbar', 'tabbar', 'switch', 'badge', 'avatar']);
-const TEXT_SEMANTICS      = new Set(['text', 'heading']);
-
 function convertNode(node, parentRect) {
   const style = node.style || {};
   const r  = node.rect || { x: 0, y: 0, w: 0, h: 0 };
@@ -167,17 +164,17 @@ function convertNode(node, parentRect) {
 
   const base = {
     id:         nidToId(node.nid),
-    name:       node.label || `${node.tag || 'node'}-${node.nid}`,
+    name:       node.layerName || node.label || `${node.tag || 'node'}-${node.nid}`,
     visible:    true,
     opacity,
     blend_mode: 'normal',
     box: { x: r.x - pr.x, y: r.y - pr.y, width: r.w, height: r.h },
   };
 
-  // instance：有 component 字段的可匹配语义节点
+  // instance：layerType=component 且有 component 匹配结果
   // componentKey / variant.variantKey 是组件库内的全局哈希，variant.guid 才是 SYMBOL GUID（symbol_id）
   // path 由 component-service 拼好返回，原样写入即可
-  if (node.component && COMPONENT_SEMANTICS.has(node.semantic)) {
+  if (node.component && node.layerType === 'component') {
     const comp = node.component;
     return {
       ...base,
@@ -193,7 +190,7 @@ function convertNode(node, parentRect) {
   }
 
   // icon → frame with placeholder
-  if (node.semantic === 'icon') {
+  if (node.layerType === 'icon') {
     const layer = { ...base, type: 'frame' };
     layer.placeholder = {
       is_placeholder:   true,
@@ -203,10 +200,22 @@ function convertNode(node, parentRect) {
     return layer;
   }
 
-  // text / heading（有文字内容且无子节点）
+  // image → frame with image fill（src 优先，fallback backgroundImage）
+  if (node.layerType === 'image') {
+    const layer = { ...base, type: 'frame' };
+    const src = node.src || (style.backgroundImage && style.backgroundImage.startsWith('url(')
+      ? style.backgroundImage.match(/url\(["']?([^"')]+)["']?\)/)?.[1]
+      : null);
+    if (src) {
+      layer.fills = [{ type: 'image', visible: true, opacity: 1, image_hash: src.split('/').pop().replace(/\.[^.]+$/, '') }];
+    }
+    return layer;
+  }
+
+  // text（有文字内容且无子节点）
   const hasText = node.text && node.text.trim();
   const hasKids = (node.children || []).length > 0;
-  if (TEXT_SEMANTICS.has(node.semantic) && hasText && !hasKids) {
+  if (node.layerType === 'text' && hasText && !hasKids) {
     return {
       ...base,
       type:         'text',
