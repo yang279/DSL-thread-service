@@ -121,17 +121,29 @@ Node | Node[]
 | `maskSize` / `maskPosition` | string | 有 `maskImage` 时才出现 |
 | `backdropFilter` | string | 非 `"none"` |
 
+**图片内容**
+
+| 字段 | 类型 | 出现条件 |
+|---|---|---|
+| `imageData` | string | `img` 标签（非 SVG）且已成功加载时，内容编码为 base64 Data URL，格式 `data:image/png;base64,...` |
+| `svgContent` | string | `img[src=*.svg]` 或 `data:image/svg+xml` 加载成功时，值为原始 SVG XML 字符串；内联 `<svg>` 标签时，值为该元素的 `outerHTML` |
+
+> 两个字段均由 Step 1 的 `extractNodes()` 写入 styles 映射，经 `prune-nodes.js` 透传至 Step 2 的 `styles-<filename>.json`，最终内联到 schema 的每个节点的 `style` 字段中。  
+> 跨域图片受 canvas 污染限制，`imageData` 可能为空；SVG 跨域时同步 XHR 会失败，`svgContent` 亦可能为空。
+
 ---
 
 ## LayerType
 
-| 值 | 含义 |
-|---|---|
-| `image` | 图片图层（img 标签或背景图）|
-| `frame` | 布局容器图层（div / section / article 等承担布局职责的节点）|
-| `text` | 纯文字图层 |
-| `icon` | 图标图层（SVG / 字体图标 / 小尺寸 img）|
-| `component` | 组件图层（对应设计系统中可复用的组件，如按钮、输入框、开关等）|
+| 值 | 可有子节点 | 含义 |
+|---|---|---|
+| `frame` | ✅ 是 | 布局容器图层（div / section / article 等承担布局职责的节点）|
+| `image` | ✅ 是 | 图片图层（img 标签或背景图）|
+| `text` | ❌ 否 | 纯文字图层，叶子节点 |
+| `icon` | ❌ 否 | 图标图层（SVG / 字体图标 / 小尺寸 img），叶子节点 |
+| `component` | ❌ 否 | 组件图层（对应设计系统中可复用的组件，如按钮、输入框、开关等），叶子节点 |
+
+> ⛔ `text` / `icon` / `component` 节点**不得有 `children` 字段**，其内部结构由组件系统管理，不在 node-dsl 中展开。
 
 ---
 

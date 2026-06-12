@@ -27,7 +27,11 @@
       "Bash(python3 -m json.tool)",
       "Bash(pkill -f \"node.*server.js\")",
       "Bash(pkill -f \"node-dsl-pipeline\")",
-      "Bash(curl -s -X POST http://localhost:3204/init)"
+      "Bash(curl -s -X POST http://localhost:3204/init)",
+      "Bash(unzip -l /Users/ucd/Desktop/DSL-thread-service/artifacts/1781171475117-kycrz/output.zip)",
+      "Bash(python3 -c ' *)",
+      "Bash(pm2 restart *)",
+      "Bash(npx pm2 *)"
     ],
     "additionalDirectories": [
       "/Users/ucd/Downloads/C2D-main/dsl-match-service"

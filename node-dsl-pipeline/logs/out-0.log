@@ -1,0 +1,34 @@
+2026-06-12 10:51:52: [node-dsl-pipeline] 服务已启动: http://localhost:3104
+2026-06-12 10:51:52:   GET  /health              健康检查
+2026-06-12 10:51:52:   POST /init                初始化子进程
+2026-06-12 10:51:52:   POST /pipeline            完整流程（补全 + 转 DSL + 导出 hex）
+2026-06-12 10:51:52:   POST /shutdown  关闭服务
+2026-06-12 10:51:52:   产物目录: /Users/ucd/Desktop/DSL-thread-service/artifacts
+2026-06-12 10:51:52: [IPCManager] dslToHex 已启动
+2026-06-12 10:51:52: [IPCManager] componentService 已启动
+2026-06-12 10:51:52: [IPCManager] 2/3 个服务已就绪
+2026-06-12 10:51:52: [node-dsl-pipeline] 子进程已就绪
+2026-06-12 10:52:44: 
+[node-dsl-pipeline] 收到关闭信号，正在清理...
+2026-06-12 10:52:45: [node-dsl-pipeline] 服务已启动: http://localhost:3104
+2026-06-12 10:52:45:   GET  /health              健康检查
+2026-06-12 10:52:45:   POST /init                初始化子进程
+2026-06-12 10:52:45:   POST /pipeline            完整流程（补全 + 转 DSL + 导出 hex）
+2026-06-12 10:52:45:   POST /shutdown  关闭服务
+2026-06-12 10:52:45:   产物目录: /Users/ucd/Desktop/DSL-thread-service/artifacts
+2026-06-12 10:52:45: [IPCManager] dslToHex 已启动
+2026-06-12 10:52:45: [IPCManager] componentService 已启动
+2026-06-12 10:52:45: [IPCManager] 2/3 个服务已就绪
+2026-06-12 10:52:45: [node-dsl-pipeline] 子进程已就绪
+2026-06-12 11:06:38: 
+[node-dsl-pipeline] 收到关闭信号，正在清理...
+2026-06-12 11:06:38: [node-dsl-pipeline] 服务已启动: http://localhost:3104
+2026-06-12 11:06:38:   GET  /health              健康检查
+2026-06-12 11:06:38:   POST /init                初始化子进程
+2026-06-12 11:06:38:   POST /pipeline            完整流程（补全 + 转 DSL + 导出 hex）
+2026-06-12 11:06:38:   POST /shutdown  关闭服务
+2026-06-12 11:06:38:   产物目录: /Users/ucd/Desktop/DSL-thread-service/artifacts
+2026-06-12 11:06:38: [IPCManager] dslToHex 已启动
+2026-06-12 11:06:38: [IPCManager] componentService 已启动
+2026-06-12 11:06:38: [IPCManager] 2/3 个服务已就绪
+2026-06-12 11:06:38: [node-dsl-pipeline] 子进程已就绪

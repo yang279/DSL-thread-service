@@ -18,3 +18,153 @@ Emitted 'error' event on Server instance at:
 }
 
 Node.js v24.15.0
+[node-dsl-pipeline] 服务已启动: http://localhost:3204
+  GET  /health              健康检查
+  POST /init                初始化子进程
+  POST /pipeline            完整流程（补全 + 转 DSL + 导出 hex）
+  POST /shutdown  关闭服务
+  产物目录: /Users/ucd/Desktop/DSL-thread-service/artifacts
+node:internal/modules/cjs/loader:1479
+  throw err;
+  ^
+
+Error: Cannot find module './core'
+Require stack:
+- /Users/ucd/Desktop/DSL-thread-service/workers/icon-agent/worker.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1476:15)
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1049:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1073:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1094:12)
+    at Module._load (node:internal/modules/cjs/loader:1262:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1576:12)
+    at require (node:internal/modules/helpers:153:16)
+    at Object.<anonymous> (/Users/ucd/Desktop/DSL-thread-service/workers/icon-agent/worker.js:26:14)
+    at Module._compile (node:internal/modules/cjs/loader:1830:14) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/ucd/Desktop/DSL-thread-service/workers/icon-agent/worker.js'
+  ]
+}
+
+Node.js v24.15.0
+[IPCManager] dslToHex 已启动
+[dsl-to-hex] 就绪
+[IPCManager] componentService 已启动
+[IPCManager] iconAgent 启动失败: iconAgent 异常退出 (code 1)
+[IPCManager] 2/3 个服务已就绪
+[node-dsl-pipeline] 子进程已就绪
+[dsl-match-service] 就绪
+[match_dsl] matchDsl（整页统一匹配）→ 提取到 1 个 layerType=component 节点
+[match_dsl] matchDsl → 查询词：["通知开关"]
+[match_variant] matchVariantsTogether（整页统一匹配）开始：共 1 条查询
+[match_variant] Step 0 聚类：1 条 → 1 个独立簇
+[match_variant] Step 1 规范映射表：0 簇命中，1 簇待 LLM
+[match_variant] Step 2 本地过滤：1/1 个待处理簇有候选，0 个未命中（直接判 null）
+[match_variant] Step 3：1 个簇一次性交给 LLM 选组件集
+[match_variant] selectComponentSetsTogether → 1 个元素，去重合并候选池 3 个组件集
+[match_variant] selectComponentSetsTogether（整页选组件集） → 调用 https://api.deepseek.com/v1 (model=deepseek-v4-flash, timeout=60000ms)
+[match_variant] selectComponentSetsTogether（整页选组件集） ✗ 失败，耗时 497ms：402 Insufficient Balance
+[match_variant] selectComponentSetsTogether 失败（402 Insufficient Balance），全部算法兜底
+[match_variant] matchVariantsTogether → 「通知开关」LLM 未选组件集，算法兜底「1.开关-基础样式」
+[match_variant] Step 4：按组件集分成 1 组（1.开关-基础样式×1）
+[match_variant] selectVariantsTogether → 组件集「1.开关-基础样式」(ICT UI 组件库)，本组 1 个元素，候选 10 个变体
+[match_variant] selectVariantsTogether（整页选变体） → 调用 https://api.deepseek.com/v1 (model=deepseek-v4-flash, timeout=60000ms)
+[match_variant] selectVariantsTogether（整页选变体） ✗ 失败，耗时 508ms：402 Insufficient Balance
+[match_variant] selectVariantsTogether「1.开关-基础样式」失败（402 Insufficient Balance），算法兜底
+[match_variant] matchVariantsTogether → 「通知开关」LLM 未选变体，算法兜底「1.开关-基础样式」
+[match_variant] matchVariantsTogether ✓ 完成：1/1
+[match_dsl] matchDsl ✓ 完成：1 个节点中命中 1 个
+⚠ iconAgent 注入失败或无结果，使用原始 schema 继续：[IPCManager] iconAgent 未启动
+✓ Step3/C 完成：iconSvg 跳过，component 注入 1 个节点 → /var/folders/ph/8jtvbjss2876zk30b1f9rbr40000gp/T/pipeline-output-kdGAaD/final.json
+调用 dsl-to-hex (file: settings)
+[WARN] 组件 hex 读取失败: ~/Desktop/md-skill/pixso-parse/pix-split/lib-out/ict-ui/component/666792a585576efe10ca93fe9ebc595b44211fdc.txt (ENOENT: no such file or directory, open '~/Desktop/md-skill/pixso-parse/pix-split/lib-out/ict-ui/component/666792a585576efe10ca93fe9ebc595b44211fdc.txt')
+cannot open: /var/folders/ph/8jtvbjss2876zk30b1f9rbr40000gp/T/pix-oiGK8A/666792a585576efe10ca93fe9ebc595b44211fdc.txt
+[ERROR] 组件集文件不存在: /var/folders/ph/8jtvbjss2876zk30b1f9rbr40000gp/T/pix-oiGK8A/666792a585576efe10ca93fe9ebc595b44211fdc.txt
+✓ 已写出 /var/folders/ph/8jtvbjss2876zk30b1f9rbr40000gp/T/pipeline-output-kdGAaD/output.zip (1209 字节)
+⚠ 缺失组件 1 个: 666792a585576efe10ca93fe9ebc595b44211fdc
+[pipeline] 产物已存储: 1781176414055-p6nl7
+[pipeline] 处理失败: Expected ',' or '}' after property value in JSON at position 1315 (line 48 column 35)
+[match_dsl] matchDsl（整页统一匹配）→ 提取到 3 个 layerType=component 节点
+[match_dsl] matchDsl → 查询词：["用户名输入框","密码输入框","登录按钮"]
+[match_variant] matchVariantsTogether（整页统一匹配）开始：共 3 条查询
+[match_variant] Step 0 聚类：3 条 → 3 个独立簇
+[match_variant] Step 1 规范映射表：0 簇命中，3 簇待 LLM
+[match_variant] Step 2 本地过滤：3/3 个待处理簇有候选，0 个未命中（直接判 null）
+[match_variant] Step 3：3 个簇一次性交给 LLM 选组件集
+[match_variant] selectComponentSetsTogether → 3 个元素，去重合并候选池 17 个组件集
+[match_variant] selectComponentSetsTogether（整页选组件集） → 调用 https://api.deepseek.com/v1 (model=deepseek-v4-flash, timeout=60000ms)
+[match_variant] selectComponentSetsTogether（整页选组件集） ✗ 失败，耗时 697ms：402 Insufficient Balance
+[match_variant] selectComponentSetsTogether 失败（402 Insufficient Balance），全部算法兜底
+[match_variant] matchVariantsTogether → 「用户名输入框」LLM 未选组件集，算法兜底「1.单行文本输入框」
+[match_variant] matchVariantsTogether → 「密码输入框」LLM 未选组件集，算法兜底「1.单行文本输入框」
+[match_variant] matchVariantsTogether → 「登录按钮」LLM 未选组件集，算法兜底「.功能区」
+[match_variant] Step 4：按组件集分成 2 组（1.单行文本输入框×2、.功能区×1）
+[match_variant] selectVariantsTogether → 组件集「1.单行文本输入框」(ICT UI 组件库)，本组 2 个元素，候选 10 个变体
+[match_variant] selectVariantsTogether（整页选变体） → 调用 https://api.deepseek.com/v1 (model=deepseek-v4-flash, timeout=60000ms)
+[match_variant] selectVariantsTogether（整页选变体） ✗ 失败，耗时 587ms：402 Insufficient Balance
+[match_variant] selectVariantsTogether「1.单行文本输入框」失败（402 Insufficient Balance），算法兜底
+[match_variant] matchVariantsTogether → 「用户名输入框」LLM 未选变体，算法兜底「1.单行文本输入框」
+[match_variant] matchVariantsTogether → 「密码输入框」LLM 未选变体，算法兜底「1.单行文本输入框」
+[match_variant] selectVariantsTogether → 组件集「.功能区」(H Design 图表库)，本组 1 个元素，候选 3 个变体
+[match_variant] selectVariantsTogether（整页选变体） → 调用 https://api.deepseek.com/v1 (model=deepseek-v4-flash, timeout=60000ms)
+[match_variant] selectVariantsTogether（整页选变体） ✗ 失败，耗时 682ms：402 Insufficient Balance
+[match_variant] selectVariantsTogether「.功能区」失败（402 Insufficient Balance），算法兜底
+[match_variant] matchVariantsTogether → 「登录按钮」LLM 未选变体，算法兜底「.功能区」
+[match_variant] matchVariantsTogether ✓ 完成：3/3
+[match_dsl] matchDsl ✓ 完成：3 个节点中命中 3 个
+⚠ iconAgent 注入失败或无结果，使用原始 schema 继续：[IPCManager] iconAgent 未启动
+✓ Step3/C 完成：iconSvg 跳过，component 注入 3 个节点 → /var/folders/ph/8jtvbjss2876zk30b1f9rbr40000gp/T/pipeline-output-ZetYvs/final.json
+调用 dsl-to-hex (file: login)
+[WARN] 组件 hex 读取失败: ~/Desktop/md-skill/pixso-parse/pix-split/lib-out/ict-ui/component/877809c8244fba071a3d111c1cfc92c230130da7.txt (ENOENT: no such file or directory, open '~/Desktop/md-skill/pixso-parse/pix-split/lib-out/ict-ui/component/877809c8244fba071a3d111c1cfc92c230130da7.txt')
+[WARN] 组件 hex 读取失败: ~/Desktop/md-skill/pixso-parse/pix-split/lib-out/h-design-chart/component/771_64782.txt (ENOENT: no such file or directory, open '~/Desktop/md-skill/pixso-parse/pix-split/lib-out/h-design-chart/component/771_64782.txt')
+cannot open: /var/folders/ph/8jtvbjss2876zk30b1f9rbr40000gp/T/pix-J5Ru3W/771:64782.txt
+[ERROR] 组件集文件不存在: /var/folders/ph/8jtvbjss2876zk30b1f9rbr40000gp/T/pix-J5Ru3W/771:64782.txt
+cannot open: /var/folders/ph/8jtvbjss2876zk30b1f9rbr40000gp/T/pix-J5Ru3W/877809c8244fba071a3d111c1cfc92c230130da7.txt
+[ERROR] 组件集文件不存在: /var/folders/ph/8jtvbjss2876zk30b1f9rbr40000gp/T/pix-J5Ru3W/877809c8244fba071a3d111c1cfc92c230130da7.txt
+✓ 已写出 /var/folders/ph/8jtvbjss2876zk30b1f9rbr40000gp/T/pipeline-output-ZetYvs/output.zip (1015 字节)
+⚠ 缺失组件 2 个: 877809c8244fba071a3d111c1cfc92c230130da7, 771:64782
+[pipeline] 产物已存储: 1781177676414-sk7ak
+
+[node-dsl-pipeline] 收到关闭信号，正在清理...
+[IPCManager] componentService 已停止
+[IPCManager] dslToHex 已停止
+[node-dsl-pipeline] 服务已启动: http://localhost:3204
+  GET  /health              健康检查
+  POST /init                初始化子进程
+  POST /pipeline            完整流程（补全 + 转 DSL + 导出 hex）
+  POST /shutdown  关闭服务
+  产物目录: /Users/ucd/Desktop/DSL-thread-service/artifacts
+node:internal/modules/cjs/loader:1479
+  throw err;
+  ^
+
+Error: Cannot find module './core'
+Require stack:
+- /Users/ucd/Desktop/DSL-thread-service/workers/icon-agent/worker.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1476:15)
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1049:27)
+    at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1073:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1094:12)
+    at Module._load (node:internal/modules/cjs/loader:1262:25)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.require (node:internal/modules/cjs/loader:1576:12)
+    at require (node:internal/modules/helpers:153:16)
+    at Object.<anonymous> (/Users/ucd/Desktop/DSL-thread-service/workers/icon-agent/worker.js:26:14)
+    at Module._compile (node:internal/modules/cjs/loader:1830:14) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/ucd/Desktop/DSL-thread-service/workers/icon-agent/worker.js'
+  ]
+}
+
+Node.js v24.15.0
+[IPCManager] dslToHex 已启动
+[dsl-to-hex] 就绪
+[IPCManager] componentService 已启动
+[IPCManager] iconAgent 启动失败: iconAgent 异常退出 (code 1)
+[IPCManager] 2/3 个服务已就绪
+[node-dsl-pipeline] 子进程已就绪
+[dsl-match-service] 就绪
+[IPCManager] componentService 已停止
+[IPCManager] dslToHex 已停止

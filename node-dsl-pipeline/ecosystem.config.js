@@ -8,12 +8,10 @@ module.exports = {
       watch: false,
       max_memory_restart: '1G',
       env: {
-        PORT: 3104,
         DEFAULT_MODE: 'ipc',
         NODE_ENV: 'production'
       },
       env_development: {
-        PORT: 3104,
         DEFAULT_MODE: 'ipc',
         NODE_ENV: 'development'
       },

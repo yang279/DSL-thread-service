@@ -153,6 +153,14 @@ function buildAutoLayout(style) {
   };
 }
 
+// ── placeholder ───────────────────────────────────────────────────────────────
+
+function buildPlaceholder(style) {
+  if (style.svgContent) return { is_placeholder: true, replacement_type: 'svg',   note: style.svgContent };
+  if (style.imageData)  return { is_placeholder: true, replacement_type: 'image', note: style.imageData  };
+  return null;
+}
+
 // ── 节点转换（递归） ──────────────────────────────────────────────────────────
 
 function convertNode(node, parentRect) {
@@ -199,25 +207,22 @@ function convertNode(node, parentRect) {
     if (strokes.length)                layer.strokes       = strokes;
     if (corners.corner_radius != null) layer.corner_radius = corners.corner_radius;
     if (corners.corner_radii)          layer.corner_radii  = corners.corner_radii;
+    const ph = buildPlaceholder(style);
+    if (ph) layer.placeholder = ph;
     return layer;
   }
 
   // image：有子节点 → frame，无子节点 → rectangle
   if (node.layerType === 'image') {
     const hasKids = (node.children || []).length > 0;
-    const src = node.src || (style.backgroundImage && style.backgroundImage.startsWith('url(')
-      ? style.backgroundImage.match(/url\(["']?([^"')]+)["']?\)/)?.[1]
-      : null);
-    const imageFill = src
-      ? [{ type: 'image', visible: true, opacity: 1, image_hash: src.split('/').pop().replace(/\.[^.]+$/, '') }]
-      : [];
+    const ph = buildPlaceholder(style);
     if (!hasKids) {
       const layer = { ...base, type: 'rectangle' };
-      if (imageFill.length) layer.fills = imageFill;
+      if (ph) layer.placeholder = ph;
       return layer;
     }
     const layer = { ...base, type: 'frame' };
-    if (imageFill.length) layer.fills = imageFill;
+    if (ph) layer.placeholder = ph;
     const kids = (node.children || []).filter(c => {
       const cr = c.rect;
       return cr && (cr.w > 0 || cr.h > 0 || (c.children || []).length > 0);
