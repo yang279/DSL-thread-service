@@ -30,23 +30,6 @@ async function getClient() {
   return globalClient;
 }
 
-function saveArtifact(id, { pageName, stats, missingKeys, zipPath, rawIconsPath, rawCompsPath, nodeDslPath, designDslPath }) {
-  const dir = path.join(ARTIFACTS_DIR, id);
-  fs.mkdirSync(dir, { recursive: true });
-  fs.copyFileSync(zipPath, path.join(dir, 'output.zip'));
-  if (rawIconsPath  && fs.existsSync(rawIconsPath))  fs.copyFileSync(rawIconsPath,  path.join(dir, 'raw-icons.json'));
-  if (rawCompsPath  && fs.existsSync(rawCompsPath))  fs.copyFileSync(rawCompsPath,  path.join(dir, 'raw-components.json'));
-  if (nodeDslPath   && fs.existsSync(nodeDslPath))   fs.copyFileSync(nodeDslPath,   path.join(dir, 'node-dsl.json'));
-  if (designDslPath && fs.existsSync(designDslPath)) fs.copyFileSync(designDslPath, path.join(dir, 'design-dsl.json'));
-  fs.writeFileSync(path.join(dir, 'meta.json'), JSON.stringify({
-    id,
-    page_name:    pageName,
-    created_at:   new Date().toISOString(),
-    stats,
-    missing_keys: missingKeys,
-  }, null, 2));
-}
-
 app.use(express.json({ limit: '50mb' }));
 
 // ── 健康检查 ──────────────────────────────────────────────────────────────────
@@ -64,9 +47,43 @@ app.post('/init', async (req, res) => {
   }
 });
 
+// ── 单步接口 ──────────────────────────────────────────────────────────────────
+app.post('/icon-agent/resolve', async (req, res) => {
+  try {
+    const client = await getClient();
+    const result = await client.callIconAgentResolveFromData(req.body);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/component-service/match-dsl', async (req, res) => {
+  try {
+    const client = await getClient();
+    const result = await client.callComponentMatchDslFromData(req.body);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/dsl-to-hex/convert', async (req, res) => {
+  try {
+    const client = await getClient();
+    const result = await client.callDslToHexConvert(req.body);
+    if (result.error) return res.status(500).json({ error: result.error });
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // ── 完整流水线 ────────────────────────────────────────────────────────────────
 app.post('/pipeline', upload.single('file'), async (req, res) => {
   const tmpPath = req.file ? path.join(os.tmpdir(), `pipeline-input-${Date.now()}.json`) : null;
+  let artifactDir = null;
+  let step = 'init';
 
   try {
     if (!req.file) {
@@ -80,16 +97,20 @@ app.post('/pipeline', upload.single('file'), async (req, res) => {
     const inputData = JSON.parse(req.file.buffer.toString('utf8'));
 
     const client = await getClient();
-    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'pipeline-output-'));
 
+    const artifactId = `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+    artifactDir = path.join(ARTIFACTS_DIR, artifactId);
+    fs.mkdirSync(artifactDir, { recursive: true });
+
+    step = 'enrich';
     let finalSchema = inputData;
     let enrichStats = { icons: 0, components: 0 };
 
     if (!skipEnrich) {
-      finalSchema = await enrich(tmpPath, tmpDir, client);
+      finalSchema = await enrich(tmpPath, artifactDir, client);
 
-      const rawIconsPath = path.join(tmpDir, 'raw-icons.json');
-      const rawCompsPath = path.join(tmpDir, 'raw-components.json');
+      const rawIconsPath = path.join(artifactDir, 'raw-icons.json');
+      const rawCompsPath = path.join(artifactDir, 'raw-components.json');
       if (fs.existsSync(rawIconsPath)) {
         const ri = JSON.parse(fs.readFileSync(rawIconsPath, 'utf8'));
         enrichStats.icons = ri?.success ? 1 : 0;
@@ -100,23 +121,23 @@ app.post('/pipeline', upload.single('file'), async (req, res) => {
       }
     }
 
+    step = 'design-dsl';
     const pageName = page_name || inputData.meta?.file_name || 'Page 1';
     const dsl      = buildDesignDsl(finalSchema, pageName);
     const layers   = countLayers(dsl.pages[0].layers);
     const stats    = { enrich: enrichStats, layers, missing_keys: 0 };
 
-    const { missingKeys, zipPath } = await exportHex(dsl, tmpDir, client);
+    step = 'export-hex';
+    const { missingKeys, zipPath } = await exportHex(dsl, artifactDir, client);
     stats.missing_keys = missingKeys.length;
 
-    // 存储产物
-    const artifactId = `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-    saveArtifact(artifactId, {
-      pageName, stats, missingKeys, zipPath,
-      rawIconsPath:  path.join(tmpDir, 'raw-icons.json'),
-      rawCompsPath:  path.join(tmpDir, 'raw-components.json'),
-      nodeDslPath:   path.join(tmpDir, 'final.json'),
-      designDslPath: path.join(tmpDir, 'design-dsl.json'),
-    });
+    fs.writeFileSync(path.join(artifactDir, 'meta.json'), JSON.stringify({
+      id:           artifactId,
+      page_name:    pageName,
+      created_at:   new Date().toISOString(),
+      stats,
+      missing_keys: missingKeys,
+    }, null, 2));
     console.log(`[pipeline] 产物已存储: ${artifactId}`);
 
     res.json({
@@ -128,8 +149,17 @@ app.post('/pipeline', upload.single('file'), async (req, res) => {
     });
 
   } catch (err) {
-    console.error('[pipeline] 处理失败:', err.message);
-    res.status(500).json({ error: err.message });
+    console.error(`[pipeline] 步骤 ${step} 失败:`, err.message);
+    if (artifactDir) {
+      try {
+        fs.writeFileSync(path.join(artifactDir, 'error.json'), JSON.stringify({
+          step,
+          error:     err.message,
+          failed_at: new Date().toISOString(),
+        }, null, 2));
+      } catch {}
+    }
+    res.status(500).json({ error: err.message, step });
   } finally {
     if (tmpPath) try { fs.unlinkSync(tmpPath); } catch {}
   }
@@ -152,10 +182,13 @@ process.on('SIGTERM', gracefulShutdown);
 
 app.listen(PORT, HOST, async () => {
   console.log(`[node-dsl-pipeline] 服务已启动: http://${HOST}:${PORT}`);
-  console.log('  GET  /health              健康检查');
-  console.log('  POST /init                初始化子进程');
-  console.log('  POST /pipeline            完整流程（补全 + 转 DSL + 导出 hex）');
-  console.log('  POST /shutdown  关闭服务');
+  console.log('  GET  /health                      健康检查');
+  console.log('  POST /init                        初始化子进程');
+  console.log('  POST /icon-agent/resolve          图标 SVG 注入');
+  console.log('  POST /component-service/match-dsl 组件匹配');
+  console.log('  POST /dsl-to-hex/convert          design-dsl → hex');
+  console.log('  POST /pipeline                    完整流程（补全 + 转 DSL + 导出 hex）');
+  console.log('  POST /shutdown                    关闭服务');
   console.log(`  产物目录: ${ARTIFACTS_DIR}`);
 
   try {

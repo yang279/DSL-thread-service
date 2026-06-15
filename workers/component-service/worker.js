@@ -13,7 +13,7 @@ if (fs.existsSync(envFile)) {
     if (eq === -1) continue;
     const k = trimmed.slice(0, eq).trim();
     const v = trimmed.slice(eq + 1).trim().replace(/^["']|["']$/g, '');
-    if (k && !(k in process.env)) process.env[k] = v;
+    if (k) process.env[k] = v;
   }
 }
 

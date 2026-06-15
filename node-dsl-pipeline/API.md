@@ -94,6 +94,110 @@ curl -X POST http://localhost:3204/pipeline \
 **响应（失败）**
 
 ```json
+{ "error": "<错误信息>", "step": "enrich | design-dsl | export-hex" }
+```
+
+| 字段 | 说明 |
+|---|---|
+| `step` | 失败发生在哪个步骤，便于定位问题 |
+
+---
+
+## POST /icon-agent/resolve
+
+直接调用 icon-agent 子进程，对节点树中所有图标节点注入 SVG 内容。
+
+**请求（application/json）**
+
+```bash
+curl -X POST http://localhost:3204/icon-agent/resolve \
+  -H "Content-Type: application/json" \
+  -d @node-dsl.json
+```
+
+请求 body 为 node-dsl 节点树 JSON。
+
+**响应（成功）**
+
+```json
+{
+  "success": true,
+  "content": { "<注入 iconSvg 后的节点树>" }
+}
+```
+
+**响应（失败）**
+
+```json
+{ "error": "<错误信息>" }
+```
+
+---
+
+## POST /component-service/match-dsl
+
+直接调用 component-service 子进程，对节点树中的组件节点批量匹配设计系统组件。
+
+**请求（application/json）**
+
+```bash
+curl -X POST http://localhost:3204/component-service/match-dsl \
+  -H "Content-Type: application/json" \
+  -d @node-dsl.json
+```
+
+请求 body 为 node-dsl 节点树 JSON。
+
+**响应（成功）**
+
+```json
+[
+  { "nid": 11, "match": { "componentKey": "...", "path": "...", "variant": { ... } } },
+  { "nid": 20, "match": null }
+]
+```
+
+每个元素对应一个可匹配节点，`match` 为 `null` 表示未找到对应组件。
+
+**响应（失败）**
+
+```json
+{ "error": "<错误信息>" }
+```
+
+---
+
+## POST /dsl-to-hex/convert
+
+直接调用 dsl-to-hex 子进程，将 design-dsl JSON 转换为 Pixso 可导入的 hex 文件。
+
+**请求（application/json）**
+
+```bash
+curl -X POST http://localhost:3204/dsl-to-hex/convert \
+  -H "Content-Type: application/json" \
+  -d @design-dsl.json
+```
+
+请求 body 为 design-dsl JSON，需包含 `meta` 和 `pages` 字段（格式见 `设计dsl.md`）。
+
+**响应（成功）**
+
+```json
+{
+  "zip": "<base64 编码的 zip>",
+  "missing_keys": ["<缺失组件key>"]
+}
+```
+
+| 字段 | 说明 |
+|---|---|
+| `zip` | base64 编码的 zip，解压后含 `output.hex` 及 svg/png 资源 |
+| `missing_keys` | 未能解析的组件 key 列表，zip 仍有效但对应组件在 Pixso 中缺失 |
+
+**响应（失败）**
+
+```json
 { "error": "<错误信息>" }
 ```
 
