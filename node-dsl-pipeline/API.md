@@ -83,7 +83,7 @@ curl -X POST http://localhost:3204/pipeline \
 
 | 字段 | 说明 |
 |---|---|
-| `artifact_id` | 本次产物 ID，产物同时存储于服务器 `artifacts/` 目录 |
+| `artifact_id` | 本次产物 ID，产物同时存储于服务器 `artifacts/<artifact_id>/` 目录（见下表） |
 | `stats.enrich.icons` | 图标注入是否成功（0/1） |
 | `stats.enrich.components` | 成功匹配到组件的节点数 |
 | `stats.layers` | 图层统计 |
@@ -91,10 +91,23 @@ curl -X POST http://localhost:3204/pipeline \
 | `zip` | base64 编码的 zip，解压后含 `output.hex` 及 svg/png 资源 |
 | `missing_keys` | 未能解析的组件 key 列表，zip 仍有效但对应组件在 Pixso 中缺失 |
 
+**产物目录文件**（`artifacts/<artifact_id>/`）
+
+| 文件 | 说明 |
+|---|---|
+| `node-dsl.json` | 原始上传的输入 |
+| `raw-icons.json` | icon-agent 原始响应（skip_enrich 时不生成） |
+| `raw-components.json` | component-service 原始响应（skip_enrich 时不生成） |
+| `final.json` | enrich 后的 node-dsl（skip_enrich 时不生成） |
+| `design-dsl.json` | 转换后的 design-dsl |
+| `output.zip` | hex zip 包 |
+| `meta.json` | 本次统计摘要 |
+| `error.json` | 仅失败时生成，包含 step 和错误信息 |
+
 **响应（失败）**
 
 ```json
-{ "error": "<错误信息>", "step": "enrich | design-dsl | export-hex" }
+{ "error": "<错误信息>", "step": "init | enrich | design-dsl | export-hex" }
 ```
 
 | 字段 | 说明 |

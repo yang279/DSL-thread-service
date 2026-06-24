@@ -125,7 +125,6 @@ app.post('/pipeline', upload.single('file'), async (req, res) => {
     step = 'design-dsl';
     const pageName = page_name || inputData.meta?.file_name || 'Page 1';
     const dsl      = buildDesignDsl(finalSchema, pageName);
-    fs.writeFileSync(path.join(artifactDir, 'design-dsl.json'), JSON.stringify(dsl, null, 2));
     const layers   = countLayers(dsl.pages[0].layers);
     const stats    = { enrich: enrichStats, layers, missing_keys: 0 };
 

@@ -112,7 +112,7 @@ function fontWeightToStyle(w) {
 }
 
 function buildTextStyle(style) {
-  const ts = { font_family: style.fontFamily || 'HarmonyOS Sans' };
+  const ts = { font_family: style.fontFamily || '' };
   ts.font_style     = fontWeightToStyle(style.fontWeight);
   ts.font_size      = style.fontSize ? parseFloat(style.fontSize) : 14;
   const color       = cssColorToHex(style.color);
