@@ -37,7 +37,6 @@ Node | Node[]
 | `naturalWidth` | number | 否 | img 原始宽度（px）|
 | `naturalHeight` | number | 否 | img 原始高度（px）|
 | `loaded` | boolean | 否 | img 是否加载成功 |
-| `passthrough` | boolean | 否 | `true` 表示节点自身尺寸为 0 但有可见后代，是透传容器 |
 | `children` | Node[] | 否 | 子节点列表（有子节点时输出）|
 
 ---
@@ -84,6 +83,15 @@ Node | Node[]
 | `alignItems` | string | 非 `"normal"` 且非 `"stretch"` |
 | `gap` | string | 非 `"normal"` 且非 `"0px"` |
 | `gridTemplateColumns` | string | 非 `"none"` |
+
+**弹性子项**（flex 容器的直接子节点才有意义，描述该子节点自身在父 flex 中的伸缩与对齐）
+
+| 字段 | 类型 | 过滤条件 |
+|---|---|---|
+| `flexGrow` | string | 非 `"0"`，如 `"1"`（主轴方向按比例占据剩余空间）|
+| `flexShrink` | string | 非 `"1"`，如 `"0"`（禁止收缩）|
+| `flexBasis` | string | 非 `"auto"`，如 `"0%"` / `"120px"`（主轴初始尺寸）|
+| `alignSelf` | string | 非 `"auto"`，如 `"stretch"` / `"center"` / `"flex-end"`（覆盖父级 `alignItems`）|
 
 **定位**
 
@@ -134,7 +142,6 @@ Node | Node[]
 ---
 
 ## LayerType
-
 | 值 | 可有子节点 | 含义 |
 |---|---|---|
 | `frame` | ✅ 是 | 布局容器图层（div / section / article 等承担布局职责的节点）|
@@ -142,8 +149,9 @@ Node | Node[]
 | `text` | ❌ 否 | 纯文字图层，叶子节点 |
 | `icon` | ❌ 否 | 图标图层（SVG / 字体图标 / 小尺寸 img），叶子节点 |
 | `component` | ❌ 否 | 组件图层（对应设计系统中可复用的组件，如按钮、输入框、开关等），叶子节点 |
+| `rectangle` | ❌ 否  | 普通矩形图层（无特定语义的矩形色块，如分割线、背景块等）|
 
-> ⛔ `text` / `icon` / `component` 节点**不得有 `children` 字段**，其内部结构由组件系统管理，不在 node-dsl 中展开。
+> ⛔ `text` / `icon` / `component` / `rectangle` 节点**不得有 `children` 字段**，其内部结构由组件系统管理，不在 node-dsl 中展开。
 
 ---
 
@@ -222,13 +230,31 @@ Node | Node[]
       "children": [
 
         {
+          "nid": 22,
+          "tag": "img",
+          "rect": { "x": 128, "y": 96, "w": 80, "h": 80 },
+          "src": "/images/avatar-default.png",
+          "alt": "默认头像",
+          "naturalWidth": 80,
+          "naturalHeight": 80,
+          "loaded": true,
+          "layerType": "image",
+          "layerName": "用户头像",
+          "layerDescription": "登录表单顶部展示的默认用户头像图片",
+          "style": {
+            "borderRadius": "50%",
+            "imageData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAAA..."
+          }
+        },
+
+        {
           "nid": 11,
           "tag": "div",
           "rect": { "x": 20, "y": 80, "w": 335, "h": 56 },
           "class": "input-field",
-          "layerType": "component",
-          "layerName": "用户名输入框",
-          "layerDescription": "供用户输入账号名称的文本输入框组件",
+          "layerType": "frame",
+          "layerName": "用户名输入框容器",
+          "layerDescription": "用户名输入框的外层容器，内含原生 input 组件",
           "style": {
             "display": "flex",
             "alignItems": "center",
@@ -245,8 +271,8 @@ Node | Node[]
               "type": "text",
               "layerType": "component",
               "layerName": "用户名 input",
-              "layerDescription": "用户名输入框的原生 input 元素，placeholder 提示"请输入用户名"",
-              "style": { "fontFamily": "PingFang SC", "fontSize": "16px", "color": "rgb(26,26,26)" }
+              "layerDescription": "用户名输入框的原生 input 元素，placeholder 提示「请输入用户名」",
+              "style": { "fontFamily": "PingFang SC", "fontSize": "16px", "color": "rgb(26,26,26)", "flexGrow": "1" }
             }
           ]
         },
@@ -271,23 +297,6 @@ Node | Node[]
             "color": "rgb(255,255,255)"
           }
         },
-
-        {
-          "nid": 21,
-          "tag": "img",
-          "rect": { "x": 0, "y": 0, "w": 0, "h": 0 },
-          "src": "/icons/eye.svg",
-          "alt": "",
-          "naturalWidth": 24,
-          "naturalHeight": 24,
-          "loaded": true,
-          "passthrough": true,
-          "layerType": "icon",
-          "layerName": "密码可见图标",
-          "layerDescription": "点击后切换密码输入框明文/密文显示状态的图标",
-          "layerConfidence": "low",
-          "style": {}
-        }
 
       ]
     },

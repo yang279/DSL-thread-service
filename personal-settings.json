@@ -1,0 +1,459 @@
+{
+  "nid": 1,
+  "tag": "div",
+  "rect": { "x": 0, "y": 0, "w": 375, "h": 812 },
+  "id": "settings-page",
+  "class": "page page--settings",
+  "layerType": "frame",
+  "layerName": "个人配置页根容器",
+  "layerDescription": "个人设置页面的根布局容器，纵向排列顶部导航栏、个人信息卡片、设置分组和退出按钮",
+  "style": {
+    "display": "flex",
+    "flexDirection": "column",
+    "gap": "16px",
+    "backgroundColor": "rgb(245,246,248)"
+  },
+  "children": [
+
+    {
+      "nid": 2,
+      "tag": "header",
+      "rect": { "x": 0, "y": 0, "w": 375, "h": 56, "fixed": true },
+      "class": "navbar",
+      "layerType": "frame",
+      "layerName": "顶部导航栏",
+      "layerDescription": "固定在页面顶部的导航栏，左侧返回图标，居中显示页面标题「个人设置」",
+      "style": {
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "space-between",
+        "position": "fixed",
+        "top": "0px",
+        "zIndex": "100",
+        "backgroundColor": "rgb(255,255,255)",
+        "boxShadow": "0px 1px 0px rgba(0,0,0,0.06)"
+      },
+      "children": [
+        {
+          "nid": 3,
+          "tag": "span",
+          "rect": { "x": 16, "y": 16, "w": 24, "h": 24 },
+          "class": "icon icon--back",
+          "layerType": "icon",
+          "layerName": "返回图标",
+          "layerDescription": "点击后返回上一页的返回箭头图标，24×24 细线",
+          "style": { "fontSize": "24px" }
+        },
+        {
+          "nid": 4,
+          "tag": "h1",
+          "rect": { "x": 150, "y": 16, "w": 75, "h": 24 },
+          "text": "个人设置",
+          "layerType": "text",
+          "layerName": "页面标题",
+          "layerDescription": "显示当前页面名称「个人设置」的标题文字",
+          "style": { "fontFamily": "PingFang SC", "fontSize": "17px", "fontWeight": "600", "textAlign": "center" }
+        },
+        {
+          "nid": 5,
+          "tag": "span",
+          "rect": { "x": 335, "y": 16, "w": 24, "h": 24 },
+          "class": "icon icon--more",
+          "layerType": "icon",
+          "layerName": "更多操作图标",
+          "layerDescription": "点击后展开更多操作菜单的图标，24×24 细线",
+          "style": { "fontSize": "24px" }
+        }
+      ]
+    },
+
+    {
+      "nid": 10,
+      "tag": "section",
+      "rect": { "x": 16, "y": 72, "w": 343, "h": 96 },
+      "class": "profile-card",
+      "layerType": "frame",
+      "layerName": "个人信息卡片",
+      "layerDescription": "展示当前用户头像、昵称和资料入口的卡片，点击进入编辑个人资料页",
+      "style": {
+        "display": "flex",
+        "flexDirection": "row",
+        "alignItems": "center",
+        "gap": "16px",
+        "backgroundColor": "rgb(255,255,255)",
+        "borderRadius": "12px",
+        "boxShadow": "0px 4px 12px rgba(0,0,0,0.04)"
+      },
+      "children": [
+        {
+          "nid": 11,
+          "tag": "img",
+          "rect": { "x": 32, "y": 88, "w": 64, "h": 64 },
+          "src": "/images/avatar.png",
+          "alt": "用户头像",
+          "naturalWidth": 128,
+          "naturalHeight": 128,
+          "loaded": true,
+          "layerType": "image",
+          "layerName": "用户头像",
+          "layerDescription": "当前登录用户的圆形头像图片",
+          "style": {
+            "borderRadius": "50%",
+            "imageData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACA..."
+          }
+        },
+        {
+          "nid": 12,
+          "tag": "div",
+          "rect": { "x": 112, "y": 96, "w": 191, "h": 48 },
+          "class": "profile-info",
+          "layerType": "frame",
+          "layerName": "用户信息文字组",
+          "layerDescription": "纵向排列用户昵称和资料编辑提示的文字容器",
+          "style": {
+            "display": "flex",
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "gap": "4px",
+            "flexGrow": "1"
+          },
+          "children": [
+            {
+              "nid": 13,
+              "tag": "p",
+              "rect": { "x": 112, "y": 96, "w": 120, "h": 24 },
+              "text": "张三",
+              "layerType": "text",
+              "layerName": "用户昵称",
+              "layerDescription": "显示当前用户昵称「张三」的文字",
+              "style": { "fontFamily": "PingFang SC", "fontSize": "18px", "fontWeight": "600", "color": "rgb(26,26,26)" }
+            },
+            {
+              "nid": 14,
+              "tag": "p",
+              "rect": { "x": 112, "y": 124, "w": 120, "h": 20 },
+              "text": "查看并编辑个人资料",
+              "layerType": "text",
+              "layerName": "资料编辑提示",
+              "layerDescription": "提示用户可点击查看并编辑个人资料的辅助说明文字",
+              "style": { "fontFamily": "PingFang SC", "fontSize": "13px", "color": "rgb(153,153,153)" }
+            }
+          ]
+        },
+        {
+          "nid": 15,
+          "tag": "span",
+          "rect": { "x": 319, "y": 108, "w": 24, "h": 24 },
+          "class": "icon icon--chevron",
+          "layerType": "icon",
+          "layerName": "进入箭头图标",
+          "layerDescription": "指示个人信息卡片可点击进入资料页的右向箭头图标，24×24 细线",
+          "style": { "fontSize": "24px" }
+        }
+      ]
+    },
+
+    {
+      "nid": 20,
+      "tag": "section",
+      "rect": { "x": 16, "y": 184, "w": 343, "h": 152 },
+      "class": "settings-group",
+      "layerType": "frame",
+      "layerName": "账号设置分组",
+      "layerDescription": "包含账号与安全、通知、隐私三项设置入口的分组卡片",
+      "style": {
+        "display": "flex",
+        "flexDirection": "column",
+        "backgroundColor": "rgb(255,255,255)",
+        "borderRadius": "12px",
+        "overflow": "hidden"
+      },
+      "children": [
+        {
+          "nid": 21,
+          "tag": "div",
+          "rect": { "x": 16, "y": 184, "w": 343, "h": 52 },
+          "class": "setting-row",
+          "layerType": "frame",
+          "layerName": "账号与安全行",
+          "layerDescription": "点击后进入账号与安全设置页的列表行，含图标、标题和进入箭头",
+          "style": {
+            "display": "flex",
+            "flexDirection": "row",
+            "alignItems": "center",
+            "gap": "12px"
+          },
+          "children": [
+            {
+              "nid": 22,
+              "tag": "span",
+              "rect": { "x": 32, "y": 198, "w": 24, "h": 24 },
+              "class": "icon icon--shield",
+              "layerType": "icon",
+              "layerName": "账号安全图标",
+              "layerDescription": "代表账号与安全设置的盾牌图标，24×24 细线",
+              "style": { "fontSize": "24px" }
+            },
+            {
+              "nid": 23,
+              "tag": "span",
+              "rect": { "x": 68, "y": 200, "w": 200, "h": 20 },
+              "text": "账号与安全",
+              "layerType": "text",
+              "layerName": "账号与安全标题",
+              "layerDescription": "账号与安全设置行的标题文字",
+              "style": { "fontFamily": "PingFang SC", "fontSize": "15px", "color": "rgb(26,26,26)", "flexGrow": "1" }
+            },
+            {
+              "nid": 24,
+              "tag": "span",
+              "rect": { "x": 319, "y": 198, "w": 24, "h": 24 },
+              "class": "icon icon--chevron",
+              "layerType": "icon",
+              "layerName": "进入箭头图标",
+              "layerDescription": "指示账号与安全行可点击进入的右向箭头图标，24×24 细线",
+              "style": { "fontSize": "24px" }
+            }
+          ]
+        },
+        {
+          "nid": 25,
+          "tag": "div",
+          "rect": { "x": 16, "y": 236, "w": 343, "h": 52 },
+          "class": "setting-row",
+          "layerType": "frame",
+          "layerName": "通知设置行",
+          "layerDescription": "控制是否接收推送通知的列表行，右侧为开关组件",
+          "style": {
+            "display": "flex",
+            "flexDirection": "row",
+            "alignItems": "center",
+            "gap": "12px"
+          },
+          "children": [
+            {
+              "nid": 26,
+              "tag": "span",
+              "rect": { "x": 32, "y": 250, "w": 24, "h": 24 },
+              "class": "icon icon--bell",
+              "layerType": "icon",
+              "layerName": "通知图标",
+              "layerDescription": "代表推送通知设置的铃铛图标，24×24 细线",
+              "style": { "fontSize": "24px" }
+            },
+            {
+              "nid": 27,
+              "tag": "span",
+              "rect": { "x": 68, "y": 252, "w": 200, "h": 20 },
+              "text": "接收推送通知",
+              "layerType": "text",
+              "layerName": "通知设置标题",
+              "layerDescription": "推送通知开关行的标题文字",
+              "style": { "fontFamily": "PingFang SC", "fontSize": "15px", "color": "rgb(26,26,26)", "flexGrow": "1" }
+            },
+            {
+              "nid": 28,
+              "tag": "button",
+              "rect": { "x": 309, "y": 246, "w": 50, "h": 30 },
+              "class": "switch switch--on",
+              "attrs": { "role": "switch", "aria-checked": "true" },
+              "layerType": "component",
+              "layerName": "通知开关",
+              "layerDescription": "控制推送通知开启/关闭的开关组件，当前为开启状态",
+              "style": {
+                "backgroundColor": "rgb(52,199,89)",
+                "borderRadius": "15px"
+              }
+            }
+          ]
+        },
+        {
+          "nid": 29,
+          "tag": "div",
+          "rect": { "x": 16, "y": 288, "w": 343, "h": 52 },
+          "class": "setting-row",
+          "layerType": "frame",
+          "layerName": "隐私设置行",
+          "layerDescription": "点击后进入隐私设置页的列表行，含图标、标题和进入箭头",
+          "style": {
+            "display": "flex",
+            "flexDirection": "row",
+            "alignItems": "center",
+            "gap": "12px"
+          },
+          "children": [
+            {
+              "nid": 30,
+              "tag": "span",
+              "rect": { "x": 32, "y": 302, "w": 24, "h": 24 },
+              "class": "icon icon--lock",
+              "layerType": "icon",
+              "layerName": "隐私图标",
+              "layerDescription": "代表隐私设置的锁形图标，24×24 细线",
+              "style": { "fontSize": "24px" }
+            },
+            {
+              "nid": 31,
+              "tag": "span",
+              "rect": { "x": 68, "y": 304, "w": 200, "h": 20 },
+              "text": "隐私设置",
+              "layerType": "text",
+              "layerName": "隐私设置标题",
+              "layerDescription": "隐私设置行的标题文字",
+              "style": { "fontFamily": "PingFang SC", "fontSize": "15px", "color": "rgb(26,26,26)", "flexGrow": "1" }
+            },
+            {
+              "nid": 32,
+              "tag": "span",
+              "rect": { "x": 319, "y": 302, "w": 24, "h": 24 },
+              "class": "icon icon--chevron",
+              "layerType": "icon",
+              "layerName": "进入箭头图标",
+              "layerDescription": "指示隐私设置行可点击进入的右向箭头图标，24×24 细线",
+              "style": { "fontSize": "24px" }
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "nid": 40,
+      "tag": "section",
+      "rect": { "x": 16, "y": 352, "w": 343, "h": 104 },
+      "class": "settings-group",
+      "layerType": "frame",
+      "layerName": "通用设置分组",
+      "layerDescription": "包含深色模式开关和关于我们入口的设置分组卡片",
+      "style": {
+        "display": "flex",
+        "flexDirection": "column",
+        "backgroundColor": "rgb(255,255,255)",
+        "borderRadius": "12px",
+        "overflow": "hidden"
+      },
+      "children": [
+        {
+          "nid": 41,
+          "tag": "div",
+          "rect": { "x": 16, "y": 352, "w": 343, "h": 52 },
+          "class": "setting-row",
+          "layerType": "frame",
+          "layerName": "深色模式行",
+          "layerDescription": "控制是否启用深色模式的列表行，右侧为开关组件",
+          "style": {
+            "display": "flex",
+            "flexDirection": "row",
+            "alignItems": "center",
+            "gap": "12px"
+          },
+          "children": [
+            {
+              "nid": 42,
+              "tag": "span",
+              "rect": { "x": 32, "y": 366, "w": 24, "h": 24 },
+              "class": "icon icon--moon",
+              "layerType": "icon",
+              "layerName": "深色模式图标",
+              "layerDescription": "代表深色模式设置的月亮图标，24×24 细线",
+              "style": { "fontSize": "24px" }
+            },
+            {
+              "nid": 43,
+              "tag": "span",
+              "rect": { "x": 68, "y": 368, "w": 200, "h": 20 },
+              "text": "深色模式",
+              "layerType": "text",
+              "layerName": "深色模式标题",
+              "layerDescription": "深色模式开关行的标题文字",
+              "style": { "fontFamily": "PingFang SC", "fontSize": "15px", "color": "rgb(26,26,26)", "flexGrow": "1" }
+            },
+            {
+              "nid": 44,
+              "tag": "button",
+              "rect": { "x": 309, "y": 362, "w": 50, "h": 30 },
+              "class": "switch switch--off",
+              "attrs": { "role": "switch", "aria-checked": "false" },
+              "layerType": "component",
+              "layerName": "深色模式开关",
+              "layerDescription": "控制深色模式开启/关闭的开关组件，当前为关闭状态",
+              "style": {
+                "backgroundColor": "rgb(229,229,234)",
+                "borderRadius": "15px"
+              }
+            }
+          ]
+        },
+        {
+          "nid": 45,
+          "tag": "div",
+          "rect": { "x": 16, "y": 404, "w": 343, "h": 52 },
+          "class": "setting-row",
+          "layerType": "frame",
+          "layerName": "关于我们行",
+          "layerDescription": "点击后进入关于我们页面的列表行，含图标、标题和进入箭头",
+          "style": {
+            "display": "flex",
+            "flexDirection": "row",
+            "alignItems": "center",
+            "gap": "12px"
+          },
+          "children": [
+            {
+              "nid": 46,
+              "tag": "span",
+              "rect": { "x": 32, "y": 418, "w": 24, "h": 24 },
+              "class": "icon icon--info",
+              "layerType": "icon",
+              "layerName": "关于图标",
+              "layerDescription": "代表关于我们的信息图标，24×24 细线",
+              "style": { "fontSize": "24px" }
+            },
+            {
+              "nid": 47,
+              "tag": "span",
+              "rect": { "x": 68, "y": 420, "w": 200, "h": 20 },
+              "text": "关于我们",
+              "layerType": "text",
+              "layerName": "关于我们标题",
+              "layerDescription": "关于我们行的标题文字",
+              "style": { "fontFamily": "PingFang SC", "fontSize": "15px", "color": "rgb(26,26,26)", "flexGrow": "1" }
+            },
+            {
+              "nid": 48,
+              "tag": "span",
+              "rect": { "x": 319, "y": 418, "w": 24, "h": 24 },
+              "class": "icon icon--chevron",
+              "layerType": "icon",
+              "layerName": "进入箭头图标",
+              "layerDescription": "指示关于我们行可点击进入的右向箭头图标，24×24 细线",
+              "style": { "fontSize": "24px" }
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "nid": 50,
+      "tag": "button",
+      "rect": { "x": 16, "y": 740, "w": 343, "h": 48 },
+      "class": "btn btn--logout",
+      "text": "退出登录",
+      "layerType": "component",
+      "layerName": "退出登录按钮",
+      "layerDescription": "点击后退出当前账号登录状态的危险操作按钮",
+      "style": {
+        "display": "flex",
+        "justifyContent": "center",
+        "alignItems": "center",
+        "backgroundColor": "rgb(255,255,255)",
+        "borderRadius": "12px",
+        "fontSize": "16px",
+        "fontWeight": "600",
+        "color": "rgb(255,59,48)"
+      }
+    }
+
+  ]
+}

@@ -153,6 +153,23 @@ function buildAutoLayout(style) {
   };
 }
 
+// ── child layout（弹性子项：flex-grow / align-self → layout_grow / layout_align）─
+
+function buildChildLayout(style) {
+  const out = {};
+  const grow = parseFloat(style.flexGrow);
+  if (!isNaN(grow) && grow > 0) out.layout_grow = grow;
+  const self = style.alignSelf;
+  if (self && self !== 'auto') {
+    out.layout_align =
+      self === 'stretch'    ? 'stretch' :
+      self === 'center'     ? 'center'  :
+      self === 'flex-end'   ? 'max'     :
+      self === 'flex-start' ? 'min'     : 'inherit';
+  }
+  return out;
+}
+
 // ── placeholder ───────────────────────────────────────────────────────────────
 
 function buildPlaceholder(style) {
@@ -177,6 +194,7 @@ function convertNode(node, parentRect) {
     opacity,
     blend_mode: 'normal',
     box: { x: r.x - pr.x, y: r.y - pr.y, width: r.w, height: r.h },
+    ...buildChildLayout(style),
   };
 
   // instance：layerType=component 且有 component 匹配结果
@@ -197,18 +215,50 @@ function convertNode(node, parentRect) {
     };
   }
 
+  // component 未匹配 → rectangle 占位
+  if (node.layerType === 'component') {
+    const layer = { ...base, type: 'rectangle' };
+    const fills   = buildFills(style);
+    const strokes = buildStrokes(style);
+    const effects = buildEffects(style);
+    const corners = buildCornerRadius(style);
+    if (fills.length)                  layer.fills         = fills;
+    if (strokes.length)                layer.strokes       = strokes;
+    if (effects.length)                layer.effects       = effects;
+    if (corners.corner_radius != null) layer.corner_radius = corners.corner_radius;
+    if (corners.corner_radii)          layer.corner_radii  = corners.corner_radii;
+    return layer;
+  }
+
   // icon → rectangle
   if (node.layerType === 'icon') {
     const layer = { ...base, type: 'rectangle' };
     const fills   = buildFills(style);
     const strokes = buildStrokes(style);
+    const effects = buildEffects(style);
     const corners = buildCornerRadius(style);
     if (fills.length)                  layer.fills         = fills;
     if (strokes.length)                layer.strokes       = strokes;
+    if (effects.length)                layer.effects       = effects;
     if (corners.corner_radius != null) layer.corner_radius = corners.corner_radius;
     if (corners.corner_radii)          layer.corner_radii  = corners.corner_radii;
     const ph = buildPlaceholder(style);
     if (ph) layer.placeholder = ph;
+    return layer;
+  }
+
+  // rectangle → rectangle（叶子节点）
+  if (node.layerType === 'rectangle') {
+    const layer = { ...base, type: 'rectangle' };
+    const fills   = buildFills(style);
+    const strokes = buildStrokes(style);
+    const effects = buildEffects(style);
+    const corners = buildCornerRadius(style);
+    if (fills.length)                  layer.fills         = fills;
+    if (strokes.length)                layer.strokes       = strokes;
+    if (effects.length)                layer.effects       = effects;
+    if (corners.corner_radius != null) layer.corner_radius = corners.corner_radius;
+    if (corners.corner_radii)          layer.corner_radii  = corners.corner_radii;
     return layer;
   }
 
