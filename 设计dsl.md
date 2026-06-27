@@ -58,8 +58,6 @@
 | `opacity` | number | 是 | 透明度，范围 `0`~`1` |
 | `blend_mode` | string | 是 | 混合模式，见 [BlendMode](#blendmode) |
 | `box` | BoundingBox | 是 | 节点包围框，相对父节点坐标 |
-| `layout_grow` | number | 否 | 主轴伸缩系数（对应 CSS `flex-grow`），仅当父节点开启 `auto_layout` 时生效；`0` 或省略表示不伸缩 |
-| `layout_align` | string | 否 | 交叉轴自身对齐覆写（对应 CSS `align-self`）：`"inherit"`（继承父级 `align_items`）/ `"min"` / `"center"` / `"max"` / `"stretch"`，仅当父节点开启 `auto_layout` 时生效 |
 | `placeholder` | PlaceholderMeta | 否 | 占位符元信息（标记临时替代图层）|
 
 ### NormalLayer（普通图层）

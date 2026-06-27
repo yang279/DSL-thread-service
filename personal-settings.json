@@ -10,6 +10,7 @@
   "style": {
     "display": "flex",
     "flexDirection": "column",
+    "alignItems": "center",
     "gap": "16px",
     "backgroundColor": "rgb(245,246,248)"
   },

@@ -1,0 +1,568 @@
+{
+  "nid": 1,
+  "tag": "div",
+  "rect": { "x": 0, "y": 0, "w": 1440, "h": 1024 },
+  "id": "landing-root",
+  "class": "landing",
+  "layerType": "frame",
+  "layerName": "着陆页根容器",
+  "layerDescription": "产品官网着陆页的根布局容器，纵向排列顶部导航栏、主视觉区、功能卡片区和页脚",
+  "style": {
+    "display": "flex",
+    "flexDirection": "column",
+    "backgroundColor": "rgb(255,255,255)"
+  },
+  "children": [
+
+    {
+      "nid": 10,
+      "tag": "header",
+      "rect": { "x": 0, "y": 0, "w": 1440, "h": 72, "fixed": true },
+      "class": "site-header",
+      "layerType": "frame",
+      "layerName": "顶部导航栏",
+      "layerDescription": "固定在页面顶部的站点导航栏，左侧品牌区与导航菜单，右侧搜索框与登录注册操作",
+      "style": {
+        "display": "flex",
+        "flexDirection": "row",
+        "alignItems": "center",
+        "justifyContent": "space-between",
+        "position": "fixed",
+        "top": "0px",
+        "zIndex": "100",
+        "backgroundColor": "rgb(255,255,255)",
+        "boxShadow": "0px 1px 0px rgba(0,0,0,0.06)"
+      },
+      "children": [
+        {
+          "nid": 11,
+          "tag": "div",
+          "rect": { "x": 48, "y": 20, "w": 460, "h": 32 },
+          "class": "header-left",
+          "layerType": "frame",
+          "layerName": "品牌与导航组",
+          "layerDescription": "横向排列产品 Logo 和主导航链接的左侧容器",
+          "style": {
+            "display": "flex",
+            "flexDirection": "row",
+            "alignItems": "center",
+            "gap": "32px"
+          },
+          "children": [
+            {
+              "nid": 12,
+              "tag": "img",
+              "rect": { "x": 48, "y": 20, "w": 120, "h": 32 },
+              "src": "/assets/logo.svg",
+              "alt": "Nova 品牌标志",
+              "naturalWidth": 240,
+              "naturalHeight": 64,
+              "loaded": true,
+              "layerType": "image",
+              "layerName": "产品 Logo",
+              "layerDescription": "站点左上角的 Nova 产品品牌标志图片，点击返回首页",
+              "style": {
+                "svgContent": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 240 64\"><text x=\"0\" y=\"44\" font-size=\"40\" font-weight=\"700\">Nova</text></svg>"
+              }
+            },
+            {
+              "nid": 13,
+              "tag": "a",
+              "rect": { "x": 200, "y": 26, "w": 56, "h": 20 },
+              "href": "/product",
+              "text": "产品",
+              "layerType": "text",
+              "layerName": "产品导航链接",
+              "layerDescription": "点击后跳转到产品介绍页的主导航链接文字",
+              "style": { "fontFamily": "Inter", "fontSize": "15px", "color": "rgb(51,51,51)" }
+            },
+            {
+              "nid": 14,
+              "tag": "a",
+              "rect": { "x": 272, "y": 26, "w": 56, "h": 20 },
+              "href": "/pricing",
+              "text": "定价",
+              "layerType": "text",
+              "layerName": "定价导航链接",
+              "layerDescription": "点击后跳转到定价方案页的主导航链接文字",
+              "style": { "fontFamily": "Inter", "fontSize": "15px", "color": "rgb(51,51,51)" }
+            },
+            {
+              "nid": 15,
+              "tag": "a",
+              "rect": { "x": 344, "y": 26, "w": 56, "h": 20 },
+              "href": "/docs",
+              "text": "文档",
+              "layerType": "text",
+              "layerName": "文档导航链接",
+              "layerDescription": "点击后跳转到开发者文档页的主导航链接文字",
+              "style": { "fontFamily": "Inter", "fontSize": "15px", "color": "rgb(51,51,51)" }
+            }
+          ]
+        },
+        {
+          "nid": 20,
+          "tag": "div",
+          "rect": { "x": 1000, "y": 16, "w": 392, "h": 40 },
+          "class": "header-right",
+          "layerType": "frame",
+          "layerName": "搜索与操作组",
+          "layerDescription": "横向排列搜索框、登录按钮和注册按钮的右侧操作容器",
+          "style": {
+            "display": "flex",
+            "flexDirection": "row",
+            "alignItems": "center",
+            "justifyContent": "flex-end",
+            "gap": "16px"
+          },
+          "children": [
+            {
+              "nid": 21,
+              "tag": "div",
+              "rect": { "x": 1000, "y": 16, "w": 200, "h": 40 },
+              "class": "search-box",
+              "attrs": { "role": "search" },
+              "layerType": "component",
+              "layerName": "全局搜索框",
+              "layerDescription": "顶部导航中用于搜索产品内容的搜索输入框组件，含放大镜图标和占位提示",
+              "style": {
+                "display": "flex",
+                "alignItems": "center",
+                "border": "1px solid rgb(221,221,221)",
+                "borderRadius": "8px",
+                "backgroundColor": "rgb(247,248,250)"
+              }
+            },
+            {
+              "nid": 22,
+              "tag": "button",
+              "rect": { "x": 1216, "y": 16, "w": 80, "h": 40 },
+              "class": "btn btn--ghost",
+              "text": "登录",
+              "layerType": "component",
+              "layerName": "登录按钮",
+              "layerDescription": "点击后打开登录弹窗的次要操作按钮",
+              "style": {
+                "display": "flex",
+                "justifyContent": "center",
+                "alignItems": "center",
+                "borderRadius": "8px",
+                "fontSize": "15px",
+                "color": "rgb(51,51,51)"
+              }
+            },
+            {
+              "nid": 23,
+              "tag": "button",
+              "rect": { "x": 1312, "y": 16, "w": 80, "h": 40 },
+              "class": "btn btn--primary",
+              "text": "注册",
+              "layerType": "component",
+              "layerName": "注册按钮",
+              "layerDescription": "点击后跳转注册页的主要操作按钮，蓝色高亮",
+              "style": {
+                "display": "flex",
+                "justifyContent": "center",
+                "alignItems": "center",
+                "backgroundColor": "rgb(37,99,235)",
+                "borderRadius": "8px",
+                "fontSize": "15px",
+                "fontWeight": "600",
+                "color": "rgb(255,255,255)"
+              }
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "nid": 30,
+      "tag": "section",
+      "rect": { "x": 0, "y": 72, "w": 1440, "h": 420 },
+      "class": "hero",
+      "layerType": "frame",
+      "layerName": "主视觉区",
+      "layerDescription": "页面顶部的主视觉区，居中展示主标题、副标题和两个行动号召按钮",
+      "style": {
+        "display": "flex",
+        "flexDirection": "column",
+        "alignItems": "center",
+        "justifyContent": "center",
+        "gap": "24px",
+        "backgroundColor": "rgb(248,250,252)"
+      },
+      "children": [
+        {
+          "nid": 31,
+          "tag": "h1",
+          "rect": { "x": 420, "y": 152, "w": 600, "h": 56 },
+          "text": "更快地构建你的下一个产品",
+          "layerType": "text",
+          "layerName": "主标题",
+          "layerDescription": "主视觉区的核心标题，传达产品加速研发的主张",
+          "style": { "fontFamily": "Inter", "fontSize": "44px", "fontWeight": "700", "color": "rgb(17,24,39)", "textAlign": "center" }
+        },
+        {
+          "nid": 32,
+          "tag": "p",
+          "rect": { "x": 480, "y": 224, "w": 480, "h": 48 },
+          "text": "一站式低代码平台，从设计到上线只需几分钟。",
+          "layerType": "text",
+          "layerName": "副标题",
+          "layerDescription": "主标题下方的副标题，补充说明产品的核心能力与价值",
+          "style": { "fontFamily": "Inter", "fontSize": "18px", "color": "rgb(107,114,128)", "textAlign": "center", "lineHeight": "24px" }
+        },
+        {
+          "nid": 33,
+          "tag": "div",
+          "rect": { "x": 580, "y": 296, "w": 280, "h": 48 },
+          "class": "hero-cta",
+          "layerType": "frame",
+          "layerName": "行动号召按钮组",
+          "layerDescription": "横向并排两个行动号召按钮的容器，主按钮免费试用、次按钮观看演示",
+          "style": {
+            "display": "flex",
+            "flexDirection": "row",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "gap": "16px"
+          },
+          "children": [
+            {
+              "nid": 34,
+              "tag": "button",
+              "rect": { "x": 580, "y": 296, "w": 132, "h": 48 },
+              "class": "btn btn--primary btn--lg",
+              "text": "免费试用",
+              "layerType": "component",
+              "layerName": "免费试用按钮",
+              "layerDescription": "点击后进入免费试用注册流程的主要行动号召按钮",
+              "style": {
+                "display": "flex",
+                "justifyContent": "center",
+                "alignItems": "center",
+                "backgroundColor": "rgb(37,99,235)",
+                "borderRadius": "10px",
+                "fontSize": "16px",
+                "fontWeight": "600",
+                "color": "rgb(255,255,255)"
+              }
+            },
+            {
+              "nid": 35,
+              "tag": "button",
+              "rect": { "x": 728, "y": 296, "w": 132, "h": 48 },
+              "class": "btn btn--outline btn--lg",
+              "text": "观看演示",
+              "layerType": "component",
+              "layerName": "观看演示按钮",
+              "layerDescription": "点击后播放产品演示视频的次要行动号召按钮",
+              "style": {
+                "display": "flex",
+                "justifyContent": "center",
+                "alignItems": "center",
+                "border": "1px solid rgb(209,213,219)",
+                "borderRadius": "10px",
+                "fontSize": "16px",
+                "fontWeight": "600",
+                "color": "rgb(55,65,81)"
+              }
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "nid": 40,
+      "tag": "section",
+      "rect": { "x": 0, "y": 492, "w": 1440, "h": 360 },
+      "class": "features",
+      "layerType": "frame",
+      "layerName": "功能卡片区",
+      "layerDescription": "横向并排展示三个核心功能卡片的区域，介绍可视化搭建、团队协作与一键部署",
+      "style": {
+        "display": "flex",
+        "flexDirection": "row",
+        "alignItems": "stretch",
+        "justifyContent": "center",
+        "gap": "32px",
+        "backgroundColor": "rgb(255,255,255)"
+      },
+      "children": [
+        {
+          "nid": 41,
+          "tag": "article",
+          "rect": { "x": 192, "y": 556, "w": 320, "h": 232 },
+          "class": "feature-card",
+          "layerType": "frame",
+          "layerName": "可视化搭建卡片",
+          "layerDescription": "介绍可视化拖拽搭建能力的功能卡片，含图标、标题、描述和了解更多按钮",
+          "style": {
+            "display": "flex",
+            "flexDirection": "column",
+            "alignItems": "flex-start",
+            "gap": "16px",
+            "backgroundColor": "rgb(249,250,251)",
+            "borderRadius": "16px",
+            "border": "1px solid rgb(238,238,238)"
+          },
+          "children": [
+            {
+              "nid": 42,
+              "tag": "span",
+              "rect": { "x": 216, "y": 580, "w": 40, "h": 40 },
+              "class": "icon icon--layout",
+              "layerType": "icon",
+              "layerName": "可视化搭建图标",
+              "layerDescription": "代表可视化拖拽搭建能力的网格布局图标，40×40 中等线条",
+              "style": { "fontSize": "40px", "color": "rgb(37,99,235)" }
+            },
+            {
+              "nid": 43,
+              "tag": "h3",
+              "rect": { "x": 216, "y": 636, "w": 272, "h": 28 },
+              "text": "可视化搭建",
+              "layerType": "text",
+              "layerName": "卡片标题",
+              "layerDescription": "可视化搭建卡片的标题文字",
+              "style": { "fontFamily": "Inter", "fontSize": "20px", "fontWeight": "600", "color": "rgb(17,24,39)" }
+            },
+            {
+              "nid": 44,
+              "tag": "p",
+              "rect": { "x": 216, "y": 672, "w": 272, "h": 48 },
+              "text": "拖拽组件即可搭建界面，无需编写前端代码。",
+              "layerType": "text",
+              "layerName": "卡片描述",
+              "layerDescription": "说明可视化搭建卡片能力细节的描述文字",
+              "style": { "fontFamily": "Inter", "fontSize": "14px", "color": "rgb(107,114,128)", "lineHeight": "24px" }
+            },
+            {
+              "nid": 45,
+              "tag": "button",
+              "rect": { "x": 216, "y": 728, "w": 104, "h": 36 },
+              "class": "btn btn--text",
+              "text": "了解更多",
+              "layerType": "component",
+              "layerName": "了解更多按钮",
+              "layerDescription": "点击后跳转到可视化搭建详情页的文字链接按钮",
+              "style": {
+                "display": "flex",
+                "alignItems": "center",
+                "justifyContent": "center",
+                "fontSize": "14px",
+                "fontWeight": "600",
+                "color": "rgb(37,99,235)"
+              }
+            }
+          ]
+        },
+        {
+          "nid": 51,
+          "tag": "article",
+          "rect": { "x": 560, "y": 556, "w": 320, "h": 232 },
+          "class": "feature-card",
+          "layerType": "frame",
+          "layerName": "团队协作卡片",
+          "layerDescription": "介绍多人实时协作能力的功能卡片，含图标、标题、描述和了解更多按钮",
+          "style": {
+            "display": "flex",
+            "flexDirection": "column",
+            "alignItems": "flex-start",
+            "gap": "16px",
+            "backgroundColor": "rgb(249,250,251)",
+            "borderRadius": "16px",
+            "border": "1px solid rgb(238,238,238)"
+          },
+          "children": [
+            {
+              "nid": 52,
+              "tag": "span",
+              "rect": { "x": 584, "y": 580, "w": 40, "h": 40 },
+              "class": "icon icon--users",
+              "layerType": "icon",
+              "layerName": "团队协作图标",
+              "layerDescription": "代表多人实时协作能力的多人头像图标，40×40 中等线条",
+              "style": { "fontSize": "40px", "color": "rgb(16,185,129)" }
+            },
+            {
+              "nid": 53,
+              "tag": "h3",
+              "rect": { "x": 584, "y": 636, "w": 272, "h": 28 },
+              "text": "团队协作",
+              "layerType": "text",
+              "layerName": "卡片标题",
+              "layerDescription": "团队协作卡片的标题文字",
+              "style": { "fontFamily": "Inter", "fontSize": "20px", "fontWeight": "600", "color": "rgb(17,24,39)" }
+            },
+            {
+              "nid": 54,
+              "tag": "p",
+              "rect": { "x": 584, "y": 672, "w": 272, "h": 48 },
+              "text": "多人实时编辑同一项目，变更即时同步。",
+              "layerType": "text",
+              "layerName": "卡片描述",
+              "layerDescription": "说明团队协作卡片能力细节的描述文字",
+              "style": { "fontFamily": "Inter", "fontSize": "14px", "color": "rgb(107,114,128)", "lineHeight": "24px" }
+            },
+            {
+              "nid": 55,
+              "tag": "button",
+              "rect": { "x": 584, "y": 728, "w": 104, "h": 36 },
+              "class": "btn btn--text",
+              "text": "了解更多",
+              "layerType": "component",
+              "layerName": "了解更多按钮",
+              "layerDescription": "点击后跳转到团队协作详情页的文字链接按钮",
+              "style": {
+                "display": "flex",
+                "alignItems": "center",
+                "justifyContent": "center",
+                "fontSize": "14px",
+                "fontWeight": "600",
+                "color": "rgb(37,99,235)"
+              }
+            }
+          ]
+        },
+        {
+          "nid": 61,
+          "tag": "article",
+          "rect": { "x": 928, "y": 556, "w": 320, "h": 232 },
+          "class": "feature-card",
+          "layerType": "frame",
+          "layerName": "一键部署卡片",
+          "layerDescription": "介绍一键部署上线能力的功能卡片，含图标、标题、描述和了解更多按钮",
+          "style": {
+            "display": "flex",
+            "flexDirection": "column",
+            "alignItems": "flex-start",
+            "gap": "16px",
+            "backgroundColor": "rgb(249,250,251)",
+            "borderRadius": "16px",
+            "border": "1px solid rgb(238,238,238)"
+          },
+          "children": [
+            {
+              "nid": 62,
+              "tag": "span",
+              "rect": { "x": 952, "y": 580, "w": 40, "h": 40 },
+              "class": "icon icon--rocket",
+              "layerType": "icon",
+              "layerName": "一键部署图标",
+              "layerDescription": "代表一键部署上线能力的火箭图标，40×40 中等线条",
+              "style": { "fontSize": "40px", "color": "rgb(244,114,22)" }
+            },
+            {
+              "nid": 63,
+              "tag": "h3",
+              "rect": { "x": 952, "y": 636, "w": 272, "h": 28 },
+              "text": "一键部署",
+              "layerType": "text",
+              "layerName": "卡片标题",
+              "layerDescription": "一键部署卡片的标题文字",
+              "style": { "fontFamily": "Inter", "fontSize": "20px", "fontWeight": "600", "color": "rgb(17,24,39)" }
+            },
+            {
+              "nid": 64,
+              "tag": "p",
+              "rect": { "x": 952, "y": 672, "w": 272, "h": 48 },
+              "text": "连接你的云账号，一键将应用部署上线。",
+              "layerType": "text",
+              "layerName": "卡片描述",
+              "layerDescription": "说明一键部署卡片能力细节的描述文字",
+              "style": { "fontFamily": "Inter", "fontSize": "14px", "color": "rgb(107,114,128)", "lineHeight": "24px" }
+            },
+            {
+              "nid": 65,
+              "tag": "button",
+              "rect": { "x": 952, "y": 728, "w": 104, "h": 36 },
+              "class": "btn btn--text",
+              "text": "了解更多",
+              "layerType": "component",
+              "layerName": "了解更多按钮",
+              "layerDescription": "点击后跳转到一键部署详情页的文字链接按钮",
+              "style": {
+                "display": "flex",
+                "alignItems": "center",
+                "justifyContent": "center",
+                "fontSize": "14px",
+                "fontWeight": "600",
+                "color": "rgb(37,99,235)"
+              }
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "nid": 70,
+      "tag": "footer",
+      "rect": { "x": 0, "y": 852, "w": 1440, "h": 172 },
+      "class": "site-footer",
+      "layerType": "frame",
+      "layerName": "页脚",
+      "layerDescription": "页面底部页脚，左侧版权信息，右侧并排社交媒体图标",
+      "style": {
+        "display": "flex",
+        "flexDirection": "row",
+        "alignItems": "center",
+        "justifyContent": "space-between",
+        "backgroundColor": "rgb(17,24,39)"
+      },
+      "children": [
+        {
+          "nid": 71,
+          "tag": "p",
+          "rect": { "x": 48, "y": 928, "w": 300, "h": 20 },
+          "text": "© 2026 Nova Inc. 保留所有权利。",
+          "layerType": "text",
+          "layerName": "版权信息",
+          "layerDescription": "页脚左侧显示公司名称与版权年份的说明文字",
+          "style": { "fontFamily": "Inter", "fontSize": "14px", "color": "rgb(156,163,175)" }
+        },
+        {
+          "nid": 72,
+          "tag": "div",
+          "rect": { "x": 1320, "y": 924, "w": 72, "h": 24 },
+          "class": "social-links",
+          "layerType": "frame",
+          "layerName": "社交图标组",
+          "layerDescription": "页脚右侧横向排列的社交媒体入口图标容器",
+          "style": {
+            "display": "flex",
+            "flexDirection": "row",
+            "alignItems": "center",
+            "gap": "16px"
+          },
+          "children": [
+            {
+              "nid": 73,
+              "tag": "span",
+              "rect": { "x": 1320, "y": 924, "w": 24, "h": 24 },
+              "class": "icon icon--twitter",
+              "layerType": "icon",
+              "layerName": "Twitter 图标",
+              "layerDescription": "点击后跳转到产品 Twitter 主页的社交图标，24×24 细线",
+              "style": { "fontSize": "24px", "color": "rgb(156,163,175)" }
+            },
+            {
+              "nid": 74,
+              "tag": "span",
+              "rect": { "x": 1368, "y": 924, "w": 24, "h": 24 },
+              "class": "icon icon--github",
+              "layerType": "icon",
+              "layerName": "GitHub 图标",
+              "layerDescription": "点击后跳转到产品 GitHub 仓库的社交图标，24×24 细线",
+              "style": { "fontSize": "24px", "color": "rgb(156,163,175)" }
+            }
+          ]
+        }
+      ]
+    }
+
+  ]
+}
